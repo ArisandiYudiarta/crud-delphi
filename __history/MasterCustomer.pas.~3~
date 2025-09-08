@@ -1,0 +1,215 @@
+unit MasterCustomer;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  Db, Menus, DBTables, wwdblook, StdCtrls, Buttons, ExtCtrls, Mask,
+  DBCtrls, Grids, Wwdbigrd, Wwdbgrid, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client;
+
+type
+  TFrmMasterCustomer = class(TForm)
+    Label20: TLabel;
+    ButtonCariSupplier: TSpeedButton;
+    DBGridCustomer: TwwDBGrid;
+    GroupBoxEntry: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    EditKodeCust: TDBEdit;
+    EditNamaCust: TDBEdit;
+    EditAlamat: TDBEdit;
+    EditTelp: TDBEdit;
+    Panel1: TPanel;
+    ButtonEntry: TBitBtn;
+    ButtonEdit: TBitBtn;
+    ButtonDelete: TBitBtn;
+    ButtonSave: TBitBtn;
+    ButtonCancel: TBitBtn;
+    ButtonClose: TBitBtn;
+    ComboboxCariKode: TwwDBLookupCombo;
+    CustomerSource: TDataSource;
+    PopupMenu1: TPopupMenu;
+    CariSupplier1: TMenuItem;
+    CariBarang1: TMenuItem;
+    Label5: TLabel;
+    DBEdit1: TDBEdit;
+    Label6: TLabel;
+    TableCustomer: TFDQuery;
+    FDUpdateSQLCustomer: TFDUpdateSQL;
+    procedure ButtonEnabled(Cond : Boolean);
+    procedure FormReadOnly(Cond : Boolean);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure ButtonEntryClick(Sender: TObject);
+    procedure ButtonEditClick(Sender: TObject);
+    procedure ButtonDeleteClick(Sender: TObject);
+    procedure ButtonSaveClick(Sender: TObject);
+    procedure ButtonCancelClick(Sender: TObject);
+    procedure ButtonCloseClick(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure CariBarang1Click(Sender: TObject);
+    procedure TableBarangCustomerAfterInsert(DataSet: TDataSet);
+    procedure EditKodeCustKeyPress(Sender: TObject; var Key: Char);
+    procedure EditNamaCustKeyPress(Sender: TObject; var Key: Char);
+    procedure EditAlamatKeyPress(Sender: TObject; var Key: Char);
+    procedure EditTelpKeyPress(Sender: TObject; var Key: Char);
+    procedure ButtonCariSupplierClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmMasterCustomer: TFrmMasterCustomer;
+
+implementation
+
+uses Datamodule, Main;
+
+{$R *.DFM}
+
+{ TFrmMasterCustomer }
+
+procedure TFrmMasterCustomer.FormReadOnly(Cond: Boolean);
+begin
+     GroupBoxEntry.Enabled:=Not Cond;
+     DBGridCustomer.Enabled:=Cond;
+     ComboboxCariKode.Enabled:=Cond;
+end;
+
+procedure TFrmMasterCustomer.FormShow(Sender: TObject);
+begin
+     FormReadOnly(True);
+     ButtonEnabled(True);
+     TableCustomer.Open;
+     DM.TableBarang.Open;
+     TableBarang.Open;
+     TableCustomer.Last;
+     TableCustomer.First;
+     ButtonEntry.SetFocus;
+end;
+
+procedure TFrmMasterCustomer.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+     if DM.Database.InTransaction then DM.Database.Rollback;
+     TableCustomer.Close;
+     TableBarang.Close;
+     DM.TableBarang.Close;
+end;
+
+procedure TFrmMasterCustomer.ButtonEnabled(Cond: Boolean);
+begin
+     ButtonEntry.Enabled:=Cond;
+     ButtonEdit.Enabled:=Cond;
+     ButtonDelete.Enabled:=Cond;
+     ButtonSave.Enabled:=Not Cond;
+     ButtonCancel.Enabled:=Not Cond;
+end;
+
+procedure TFrmMasterCustomer.ButtonEntryClick(Sender: TObject);
+begin
+     FormReadOnly(False);
+     ButtonEnabled(False);
+     DM.Database.StartTransaction;
+     TableCustomer.Append;
+     EditKodeCust.ReadOnly:=False;
+     EditKodeCust.SetFocus;
+end;
+
+procedure TFrmMasterCustomer.ButtonEditClick(Sender: TObject);
+begin
+     FormReadOnly(False);
+     ButtonEnabled(False);
+     DM.Database.StartTransaction;
+     TableCustomer.Edit;
+     EditKodeCust.ReadOnly:=True;
+     EditNamaCust.SetFocus;
+end;
+
+procedure TFrmMasterCustomer.ButtonDeleteClick(Sender: TObject);
+begin
+     if messagedlg('Hapus Data Customer Ini???', mtconfirmation, [mbyes, mbno], 0) = mryes then
+     begin
+          TableCustomer.Delete;
+     end;
+end;
+
+procedure TFrmMasterCustomer.ButtonSaveClick(Sender: TObject);
+var
+   TableName : String;
+begin
+     TableCustomer.Post;
+     DM.Database.Commit;
+     ButtonEnabled(True);
+     FormReadOnly(True);
+end;
+
+procedure TFrmMasterCustomer.ButtonCancelClick(Sender: TObject);
+begin
+     TableCustomer.Cancel;
+     //TableBarangCustomer.CancelUpdates;
+     DM.Database.Rollback;
+     ButtonEnabled(True);
+     FormReadOnly(True);
+end;
+
+procedure TFrmMasterCustomer.ButtonCloseClick(Sender: TObject);
+begin
+     Close;
+end;
+
+procedure TFrmMasterCustomer.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+     if key = #13 then Perform(CM_DIALOGKEY, VK_TAB, 0);
+end;
+
+procedure TFrmMasterCustomer.CariBarang1Click(Sender: TObject);
+begin
+     if GroupBoxEntry.Enabled then
+end;
+
+procedure TFrmMasterCustomer.TableBarangCustomerAfterInsert(
+  DataSet: TDataSet);
+begin
+     abort;
+end;
+
+procedure TFrmMasterCustomer.EditKodeCustKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+     if key = #13 then EditNamaCust.Setfocus;
+end;
+
+procedure TFrmMasterCustomer.EditNamaCustKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+     if key = #13 then EditAlamat.Setfocus;
+end;
+
+procedure TFrmMasterCustomer.EditAlamatKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+     if key = #13 then EditTelp.Setfocus;
+end;
+
+procedure TFrmMasterCustomer.EditTelpKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+     if key = #13 then ButtonSave.Setfocus;
+end;
+
+procedure TFrmMasterCustomer.ButtonCariSupplierClick(Sender: TObject);
+begin
+     CallerFindCustomer:='Master Customer';
+     ComboboxCariKode.Setfocus;
+     FrmFindCustomer.ShowModal;
+end;
+
+end.

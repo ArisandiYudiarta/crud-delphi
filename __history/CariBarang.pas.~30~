@@ -1,0 +1,111 @@
+unit CariBarang;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.Grids, vcl.wwdbigrd, vcl.wwdbgrid;
+
+type
+  TFrmCariBarang = class(TForm)
+    LabelCariBarang: TLabel;
+    inputNamaBarang: TEdit;
+    wwwwwwww: TwwDBGrid;
+    btnAmbilNamaBarang: TBitBtn;
+    BitBtn2: TBitBtn;
+    radioNama: TRadioButton;
+    radioKode: TRadioButton;
+    radioBarcode: TRadioButton;
+    radioHargaJual: TRadioButton;
+    ProdukDataSource: TDataSource;
+    QueryProduk: TFDQuery;
+    btnSearchProduk: TBitBtn;
+    procedure inputNamaBarangChange(Sender: TObject);
+    procedure btnSearchProdukClick(Sender: TObject);
+    procedure btnAmbilNamaBarangClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmCariBarang: TFrmCariBarang;
+  Cari: String;
+
+implementation
+
+  uses DataModule, Main, EntryPembelian;
+
+{$R *.dfm}
+
+
+
+procedure TFrmCariBarang.btnAmbilNamaBarangClick(Sender: TObject);
+begin
+    QueryProduk.FetchAll;
+    FrmEntryPembelian.editKodeBarang.Text:=QueryProduk.FieldByName('Kode_Brg').asString;
+    FrmEntryPembelian.editNamaBarang.Text:=QueryProduk.FieldByName('Nama_Brg').asString;
+    FrmEntryPembelian.editSatuan.Text:=QueryProduk.FieldByName('Satuan').asString;
+end;
+
+procedure TFrmCariBarang.btnSearchProdukClick(Sender: TObject);
+begin
+    Cari:='%'+inputNamaBarang.Text+'%';
+    With QueryProduk do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Add('Select *');
+      SQL.Add('from Barang A, SatBarang B');
+      SQL.Add('Where A.Kode_Brg = B.Kode_Brg');
+      if inputNamaBarang.Text <> '' then
+      begin
+          if radioNama.Checked then
+          begin
+              SQL.Add('And B.Description like '+QuotedStr(Cari));
+              SQL.Add('Order By B.Description');
+          end;
+          if radioKode.Checked then
+          begin
+              SQL.Add('And B.Kode_Brg like '+QuotedStr(Cari));
+              SQL.Add('Order By B.Kode_Brg');
+          end;
+          if radioBarcode.Checked then
+          begin
+              SQL.Add('And B.Barcode like '+QuotedStr(Cari));
+              SQL.Add('Order By B.Barcode');
+          end;
+          if radioHargaJual.Checked then
+          begin
+              SQL.Add('And B.Harga_Jual like '+QuotedStr(Cari));
+              SQL.Add('Order By B.Harga_Jual');
+          end;
+
+      end;
+
+      Open;
+      if RecordCount > 0 then
+      begin
+        btnAmbilNamaBarang.Enabled:=True;
+      end
+      else btnAmbilNamaBarang.Enabled:=False;
+    end;
+end;
+
+procedure TFrmCariBarang.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+     QueryProduk.Close;
+end;
+
+procedure TFrmCariBarang.inputNamaBarangChange(Sender: TObject);
+begin
+    btnSearchProduk.Click;
+end;
+
+end.

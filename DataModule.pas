@@ -1,0 +1,50 @@
+unit DataModule;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Stan.Param,
+  FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, FireDAC.Phys.ODBCBase, FireDAC.Phys.MSSQL,
+  FireDAC.VCLUI.Wait, FireDAC.Comp.UI;
+
+type
+  TDM = class(TDataModule)
+    FDPhysMSSQLDriverLink1: TFDPhysMSSQLDriverLink;
+    FDConnection: TFDConnection;
+    Query: TFDQuery;
+    FDGUIxWaitCursor1: TFDGUIxWaitCursor;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+const
+    OL_IPSERVER = '202.67.9.106';
+    OL_IPPUBLIC = '202.67.9.106,25000';
+    OL_USERNAME = 'sa';
+    OL_PASSWORD = '68oc2Oe$Md%X';
+    OL_DBNAME = 'Sinkron';
+var
+  DM: TDM;
+  StatusLokal, AnswerLokal : Boolean;
+  IDLokasi : String;
+  Path, Nama_Server, Nama_Database, Nama_Server_Local, Nama_Database_Local : String;
+  UserId_Elevas, Kode_Store_Elevas, Kode_Branch_Elevas, Kota_Lokasi, Kode_Lokasi, Nama_Lokasi, Kode_Area, PreNoMember : String;
+  Title_Application : String;
+  Zone_ID : String;
+  Konek_Ke_Internet : Integer;
+  Header1, Header2, Header3, Header4 : String;
+  FooterPajak, FooterClandys01, FooterClandys02, FooterClandys03, FooterClandys04, FooterClandys05, FooterClandys06, FooterClandys07, FooterClandys08, FooterClandys09, FooterClandys10 : String;
+  DetailBKP : Boolean;
+  PPN_Div, PPN_Value : Double;
+  MesinEDCBCA : Integer;
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+end.

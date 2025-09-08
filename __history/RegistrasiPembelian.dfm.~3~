@@ -1,0 +1,174 @@
+object FrmRegistrasiPembelian: TFrmRegistrasiPembelian
+  Left = 0
+  Top = 0
+  Caption = 'Registrasi Pembelian'
+  ClientHeight = 669
+  ClientWidth = 1053
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Panel1: TPanel
+    Left = 32
+    Top = 591
+    Width = 1001
+    Height = 50
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 0
+    object LMDShapeButton1: TLMDShapeButton
+      Left = 320
+      Top = 9
+      Width = 70
+      Height = 30
+      Caption = 'Preview'
+      ParentFont = False
+      AutoSize = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      AllowTransparency = True
+      AllowMouseOver = True
+      Shape.Brush.Color = clBtnFace
+      Style = sbs3D
+    end
+    object LMDShapeButton2: TLMDShapeButton
+      Left = 424
+      Top = 9
+      Width = 70
+      Height = 30
+      Caption = 'Print'
+      ParentFont = False
+      AutoSize = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      AllowTransparency = True
+      AllowMouseOver = True
+      Shape.Brush.Color = clBtnFace
+      Style = sbs3D
+    end
+  end
+  object btnEntry: TBitBtn
+    Left = 48
+    Top = 602
+    Width = 89
+    Height = 30
+    Caption = '&Entry'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    Kind = bkAll
+    NumGlyphs = 2
+    ParentFont = False
+    TabOrder = 1
+  end
+  object btnEdit: TBitBtn
+    Left = 152
+    Top = 602
+    Width = 81
+    Height = 30
+    Caption = '&Edit'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    Kind = bkHelp
+    NumGlyphs = 2
+    ParentFont = False
+    TabOrder = 2
+  end
+  object btnDelete: TBitBtn
+    Left = 248
+    Top = 602
+    Width = 75
+    Height = 30
+    Caption = '&Delete'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    Kind = bkNo
+    NumGlyphs = 2
+    ParentFont = False
+    TabOrder = 3
+  end
+  object btnClose: TBitBtn
+    Left = 552
+    Top = 602
+    Width = 75
+    Height = 30
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    Kind = bkClose
+    NumGlyphs = 2
+    ParentFont = False
+    TabOrder = 4
+  end
+  object wwDBGrid1: TwwDBGrid
+    Left = 32
+    Top = 120
+    Width = 1001
+    Height = 449
+    Selected.Strings = (
+      'No_Nota'#9'10'#9'No_Nota'#9#9
+      'Tgl_Nota'#9'34'#9'Tgl_Nota'#9#9
+      'No_Nota_Supplier'#9'15'#9'No_Nota_Supplier'#9#9
+      'Kode_Sup'#9'6'#9'Kode_Sup'#9#9
+      'Disc'#9'10'#9'Disc'#9#9
+      'PPN'#9'10'#9'PPN'#9#9
+      'Jangka_Waktu'#9'10'#9'Jangka_Waktu'#9#9
+      'Total'#9'10'#9'Total'#9#9
+      'Adjustment'#9'10'#9'Adjustment'#9#9
+      'UserName'#9'25'#9'UserName'#9#9
+      'Penerima'#9'30'#9'Penerima'#9#9)
+    IniAttributes.Delimiter = ';;'
+    IniAttributes.UnicodeIniFile = False
+    TitleColor = clBtnFace
+    FixedCols = 0
+    ShowHorzScrollBar = True
+    DataSource = DataSource1
+    TabOrder = 5
+    TitleAlignment = taLeftJustify
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    TitleLines = 1
+    TitleButtons = False
+  end
+  object DataSource1: TDataSource
+    DataSet = QueryTransaksiPembelian
+    Left = 656
+    Top = 336
+  end
+  object QueryTransaksiPembelian: TFDQuery
+    Connection = DM.FDConnection
+    SQL.Strings = (
+      'select * '
+      'from Pembelian')
+    Left = 768
+    Top = 336
+  end
+end

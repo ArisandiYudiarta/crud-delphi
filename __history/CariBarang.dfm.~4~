@@ -1,0 +1,194 @@
+object FrmCariBarang: TFrmCariBarang
+  Left = 0
+  Top = 0
+  Caption = 'Form Cari Barang'
+  ClientHeight = 464
+  ClientWidth = 996
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object LabelCariBarang: TLabel
+    Left = 8
+    Top = 8
+    Width = 217
+    Height = 13
+    Caption = 'Potongan Kata dari Barang Yang Akan Di Cari'
+  end
+  object inputNamaBarang: TEdit
+    Left = 237
+    Top = 8
+    Width = 148
+    Height = 21
+    TabOrder = 0
+    OnChange = inputNamaBarangChange
+  end
+  object TBTampilProduk: TwwDBGrid
+    Left = 8
+    Top = 64
+    Width = 980
+    Height = 361
+    Selected.Strings = (
+      'Kode_Brg'#9'15'#9'Kode_Brg'
+      'Nama_Brg'#9'50'#9'Nama_Brg'
+      'Barcode'#9'15'#9'Barcode'
+      'Harga_Jual'#9'10'#9'Harga_Jual'
+      'Kode_Sup'#9'6'#9'Kode_Sup'
+      'Kode_Dept'#9'3'#9'Kode_Dept'
+      'Kode_Sub_Dept'#9'7'#9'Kode_Sub_Dept'
+      'Stock_Toko'#9'10'#9'Stock_Toko'
+      'Harga_Beli_Akhir'#9'10'#9'Harga_Beli_Akhir'
+      'Harga_Beli_Average'#9'10'#9'Harga_Beli_Average'
+      'Harga_Beli_Lama'#9'10'#9'Harga_Beli_Lama'
+      'Active'#9'5'#9'Active'
+      'Description'#9'50'#9'Description'
+      'Disc'#9'10'#9'Disc'
+      'Disc_Time'#9'34'#9'Disc_Time'
+      'Disc_Time_Value'#9'10'#9'Disc_Time_Value'
+      'Harga_Beli'#9'10'#9'Harga_Beli'
+      'Harga_Beli1'#9'10'#9'Harga_Beli1'
+      'Harga_Beli2'#9'10'#9'Harga_Beli2'
+      'Harga_Grosir'#9'10'#9'Harga_Grosir'
+      'Harga_Jual_Event'#9'10'#9'Harga_Jual_Event'
+      'Harga_Jual_Lama1'#9'10'#9'Harga_Jual_Lama1'
+      'Harga_Jual_Lama2'#9'10'#9'Harga_Jual_Lama2'
+      'Harga_Khusus1'#9'10'#9'Harga_Khusus1'
+      'Harga_Khusus2'#9'10'#9'Harga_Khusus2'
+      'Is_Disc_Time'#9'5'#9'Is_Disc_Time'
+      'JBrgEventMax'#9'10'#9'JBrgEventMax'
+      'JBrgEventMin'#9'10'#9'JBrgEventMin'
+      'Jenis_PPN'#9'1'#9'Jenis_PPN'
+      'Kode_Brg_1'#9'15'#9'Kode_Brg_1'
+      'Kode_Paket'#9'5'#9'Kode_Paket'
+      'Margin'#9'10'#9'Margin'
+      'Max_Level'#9'10'#9'Max_Level'
+      'No_Nota1'#9'10'#9'No_Nota1'
+      'No_Nota2'#9'10'#9'No_Nota2'
+      'Paket'#9'5'#9'Paket'
+      'Profit'#9'10'#9'Profit'
+      'Protect_Bonus'#9'5'#9'Protect_Bonus'
+      'Protect_Sticker'#9'5'#9'Protect_Sticker'
+      'Qty_Beli1'#9'10'#9'Qty_Beli1'
+      'Qty_Beli2'#9'10'#9'Qty_Beli2'
+      'Qty_Sat_Beli1'#9'10'#9'Qty_Sat_Beli1'
+      'Qty_Sat_Beli2'#9'10'#9'Qty_Sat_Beli2'
+      'Qty_Satuan'#9'10'#9'Qty_Satuan'
+      'Sat_Beli1'#9'10'#9'Sat_Beli1'
+      'Sat_Beli2'#9'10'#9'Sat_Beli2'
+      'Satuan'#9'10'#9'Satuan'
+      'Sticker'#9'10'#9'Sticker'
+      'Stock_Gudang'#9'10'#9'Stock_Gudang'
+      'Stock_Hadiah'#9'10'#9'Stock_Hadiah'
+      'Stock_Max_Gudang'#9'10'#9'Stock_Max_Gudang'
+      'Stock_Max_Hadiah'#9'10'#9'Stock_Max_Hadiah'
+      'Stock_Max_Toko'#9'10'#9'Stock_Max_Toko'
+      'Stock_Min_Gudang'#9'10'#9'Stock_Min_Gudang'
+      'Stock_Min_Hadiah'#9'10'#9'Stock_Min_Hadiah'
+      'Stock_Min_Toko'#9'10'#9'Stock_Min_Toko'
+      'Tgl_Habis_Terakhir'#9'34'#9'Tgl_Habis_Terakhir'
+      'Tgl_Harga_Jual_Event'#9'34'#9'Tgl_Harga_Jual_Event'
+      'Tgl_Harga_Jual1'#9'34'#9'Tgl_Harga_Jual1'
+      'Tgl_Harga_Jual2'#9'34'#9'Tgl_Harga_Jual2'
+      'Tgl_Nota1'#9'34'#9'Tgl_Nota1'
+      'Tgl_Nota2'#9'34'#9'Tgl_Nota2'
+      'Tgl_Opname_Gudang_Akhir'#9'34'#9'Tgl_Opname_Gudang_Akhir'
+      'Tgl_Opname_Hadiah_Akhir'#9'34'#9'Tgl_Opname_Hadiah_Akhir'
+      'Tgl_Opname_Toko_Akhir'#9'34'#9'Tgl_Opname_Toko_Akhir')
+    IniAttributes.Delimiter = ';;'
+    IniAttributes.UnicodeIniFile = False
+    TitleColor = clBtnFace
+    FixedCols = 0
+    ShowHorzScrollBar = True
+    DataSource = ProdukDataSource
+    TabOrder = 1
+    TitleAlignment = taLeftJustify
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    TitleLines = 1
+    TitleButtons = False
+  end
+  object btnAmbilNamaBarang: TBitBtn
+    Left = 784
+    Top = 431
+    Width = 75
+    Height = 25
+    Caption = 'Ambil'
+    Kind = bkOK
+    NumGlyphs = 2
+    TabOrder = 2
+    OnClick = btnAmbilNamaBarangClick
+  end
+  object BitBtn2: TBitBtn
+    Left = 888
+    Top = 431
+    Width = 75
+    Height = 25
+    Kind = bkCancel
+    NumGlyphs = 2
+    TabOrder = 3
+  end
+  object radioNama: TRadioButton
+    Left = 8
+    Top = 41
+    Width = 154
+    Height = 17
+    Caption = 'Berdasarkan Nama Barang'
+    TabOrder = 4
+  end
+  object radioKode: TRadioButton
+    Left = 184
+    Top = 41
+    Width = 153
+    Height = 17
+    Caption = 'Berdasarkan Kode Barang'
+    TabOrder = 5
+  end
+  object radioBarcode: TRadioButton
+    Left = 360
+    Top = 41
+    Width = 161
+    Height = 17
+    Caption = 'Berdasarkan Barcode Barang'
+    TabOrder = 6
+  end
+  object radioHargaJual: TRadioButton
+    Left = 552
+    Top = 41
+    Width = 169
+    Height = 17
+    Caption = 'Berdasarkan Harga Jual Barang'
+    TabOrder = 7
+  end
+  object btnSearchProduk: TBitBtn
+    Left = 391
+    Top = 8
+    Width = 75
+    Height = 25
+    Caption = 'Search'
+    TabOrder = 8
+    OnClick = btnSearchProdukClick
+  end
+  object ProdukDataSource: TDataSource
+    DataSet = QueryProduk
+    Left = 576
+    Top = 216
+  end
+  object QueryProduk: TFDQuery
+    Active = True
+    Connection = DM.FDConnection
+    SQL.Strings = (
+      'select *'
+      'from Barang A, SatBarang B'
+      'Where A.Kode_Brg = B.Kode_Brg')
+    Left = 656
+    Top = 216
+  end
+end

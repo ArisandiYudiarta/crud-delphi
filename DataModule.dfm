@@ -1,0 +1,30 @@
+object DM: TDM
+  OldCreateOrder = False
+  Height = 376
+  Width = 817
+  object FDPhysMSSQLDriverLink1: TFDPhysMSSQLDriverLink
+    Left = 40
+    Top = 120
+  end
+  object FDConnection: TFDConnection
+    Params.Strings = (
+      'Database=Trial'
+      'Server=(Local)'
+      'User_Name=sa'
+      'DriverID=MSSQL')
+    TxOptions.AutoStop = False
+    Connected = True
+    Left = 144
+    Top = 56
+  end
+  object Query: TFDQuery
+    Connection = FDConnection
+    Left = 232
+    Top = 56
+  end
+  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    Left = 40
+    Top = 56
+  end
+end

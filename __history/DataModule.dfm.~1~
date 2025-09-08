@@ -1,0 +1,759 @@
+object DM: TDM
+  OldCreateOrder = False
+  Height = 286
+  Width = 794
+  object FDPhysMSSQLDriverLink1: TFDPhysMSSQLDriverLink
+    Left = 40
+    Top = 120
+  end
+  object DatabaseServer: TFDConnection
+    Params.Strings = (
+      'Database=ClandysMartNew'
+      'Server=(Local)'
+      'DriverID=MSSQL'
+      'User_Name=sa')
+    TxOptions.AutoStop = False
+    Left = 144
+    Top = 56
+  end
+  object QueryServer: TFDQuery
+    Connection = DatabaseServer
+    Left = 232
+    Top = 56
+  end
+  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    Left = 40
+    Top = 56
+  end
+  object DatabaseLocal: TFDConnection
+    Params.Strings = (
+      'Database=Toko'
+      'Server=(local)'
+      'DriverID=MSSQL'
+      'User_Name=sa')
+    TxOptions.AutoStop = False
+    Left = 144
+    Top = 128
+  end
+  object QueryLocal: TFDQuery
+    Connection = DatabaseLocal
+    Left = 232
+    Top = 128
+  end
+  object DatabaseMaster: TFDConnection
+    Params.Strings = (
+      'Database=Master'
+      'Server=(local)'
+      'DriverID=MSSQL')
+    Left = 144
+    Top = 192
+  end
+  object QueryMaster: TFDQuery
+    Connection = DatabaseMaster
+    Left = 232
+    Top = 192
+  end
+  object QueryBantu: TFDQuery
+    Connection = DatabaseServer
+    Left = 320
+    Top = 56
+  end
+  object QueryBantu2: TFDQuery
+    Connection = DatabaseServer
+    Left = 408
+    Top = 56
+  end
+  object QueryBantuLocal: TFDQuery
+    Connection = DatabaseLocal
+    Left = 320
+    Top = 128
+  end
+  object TableSetup: TFDQuery
+    CachedUpdates = True
+    Connection = DatabaseServer
+    UpdateObject = FDUpdateSQLSetup
+    SQL.Strings = (
+      'Select *'
+      'From Setup')
+    Left = 552
+    Top = 56
+  end
+  object TableSetupLocal: TFDQuery
+    CachedUpdates = True
+    Connection = DatabaseLocal
+    UpdateObject = FDUpdateSQLSetupLocal
+    SQL.Strings = (
+      'Select *'
+      'From Setup')
+    Left = 544
+    Top = 128
+  end
+  object FDUpdateSQLSetup: TFDUpdateSQL
+    Connection = DatabaseServer
+    InsertSQL.Strings = (
+      'INSERT INTO Setup'
+      '(Header1, Header2, Header3, Header4, Footer1, '
+      '  Footer2, Footer3, Footer4, Footer5, '
+      '  Footer6, Footer7, Footer8, Footer9, '
+      '  Footer10, Jangka_Waktu_Stock, Kode_Lokasi, '
+      '  Nama_Lokasi, Undian_Active, Kelipatan_Undian, '
+      '  Max_Label1, Max_Label2, Max_Label3, Max_Label4, '
+      '  Max_Label5, Max_Label6, Max_Label7, Tgl_Tutup_Buku, '
+      '  Nilai_Transaksi_Member, Batas_Transaksi_Member, '
+      '  Biaya_Perpanjangan_Member, FooterPajak, DetailBKP, '
+      '  FooterClandys01, FooterClandys02, FooterClandys03, '
+      '  FooterClandys04, FooterClandys05, FooterClandys06, '
+      '  FooterClandys07, FooterClandys08, FooterClandys09, '
+      '  FooterClandys10, ServerName, Nama_Database, '
+      '  UserId_Elevas, Kode_Store_Elevas, Kode_Branch_Elevas, '
+      '  Nama_Server_Gudang, Nama_Database_Gudang, Tgl_Sinkron_Akhir, '
+      '  Waktu_Sinkron_Akhir, Jadwal_Sinkron, Nama_Server_Cabang, '
+      '  Tgl_Closing, Biaya_Member_Premium, Pre_No_Member_Premium, '
+      '  Last_Reindex, Last_Reindex_Bulanan, Last_Info_Barang, '
+      '  Tempo_Expired_PO, Pembulatan_Min_Order, Kode_Area, '
+      '  Path_Folder_Inbox_CSV, Path_Folder_Outbox_CSV, '
+      
+        '  Path_Folder_Master_CSV, Interval_Get_Inbox, Time_Send_Master_C' +
+        'SV, '
+      '  Pembulatan_Min_Order_Gd, Path_Folder_Backup, Note_BM1, '
+      '  Note_BM2, Note_BM3, Note_BM4, Zone_Id, '
+      '  Time_Last_Upload, Time_Last_Finish, Record_PO_Upload, '
+      '  Record_DetPO_Upload, Record_Penjualan_Upload, '
+      '  Record_DetPenjualan_Upload, Time_Upload, Reupload, '
+      '  Outlet_ID, Last_Date_VM, Persen_New_VM, Persen_Update_VM, '
+      '  Auto_Upload_PO, Program_Version, Version_Number, '
+      '  Version_Number_Group, Tgl_Awal_Pareto, Tgl_Akhir_Pareto, '
+      '  Last_Date_Pareto, Program_Version_C, Version_Number_C, '
+      '  Version_Number_Group_C, Type_Security, Path_Update_Program, '
+      '  App_Update_Url, Connected_Internet, Jenis_Konek, '
+      '  AutoPO_Gudang, AutoPO_Supplier, Waktu_AutoPO_Akhir, '
+      '  AutoPO_24HF, Tgl_Posting, Note_RB1, Note_RB2, '
+      '  Note_RB3, Note_RB4, Kode_DC, Active_eStore, '
+      '  eStore_Stock, PPN_Value, PPN_Div, Allow_PB_Manual, '
+      '  Independent_Store, CekMemberOnline, Company_Name, '
+      '  Company_Address, Company_Telp, FingerPrint)'
+      
+        'VALUES (:NEW_Header1, :NEW_Header2, :NEW_Header3, :NEW_Header4, ' +
+        ':NEW_Footer1, '
+      '  :NEW_Footer2, :NEW_Footer3, :NEW_Footer4, :NEW_Footer5, '
+      '  :NEW_Footer6, :NEW_Footer7, :NEW_Footer8, :NEW_Footer9, '
+      '  :NEW_Footer10, :NEW_Jangka_Waktu_Stock, :NEW_Kode_Lokasi, '
+      '  :NEW_Nama_Lokasi, :NEW_Undian_Active, :NEW_Kelipatan_Undian, '
+      
+        '  :NEW_Max_Label1, :NEW_Max_Label2, :NEW_Max_Label3, :NEW_Max_La' +
+        'bel4, '
+      
+        '  :NEW_Max_Label5, :NEW_Max_Label6, :NEW_Max_Label7, :NEW_Tgl_Tu' +
+        'tup_Buku, '
+      '  :NEW_Nilai_Transaksi_Member, :NEW_Batas_Transaksi_Member, '
+      
+        '  :NEW_Biaya_Perpanjangan_Member, :NEW_FooterPajak, :NEW_DetailB' +
+        'KP, '
+      
+        '  :NEW_FooterClandys01, :NEW_FooterClandys02, :NEW_FooterClandys' +
+        '03, '
+      
+        '  :NEW_FooterClandys04, :NEW_FooterClandys05, :NEW_FooterClandys' +
+        '06, '
+      
+        '  :NEW_FooterClandys07, :NEW_FooterClandys08, :NEW_FooterClandys' +
+        '09, '
+      '  :NEW_FooterClandys10, :NEW_ServerName, :NEW_Nama_Database, '
+      
+        '  :NEW_UserId_Elevas, :NEW_Kode_Store_Elevas, :NEW_Kode_Branch_E' +
+        'levas, '
+      
+        '  :NEW_Nama_Server_Gudang, :NEW_Nama_Database_Gudang, :NEW_Tgl_S' +
+        'inkron_Akhir, '
+      
+        '  :NEW_Waktu_Sinkron_Akhir, :NEW_Jadwal_Sinkron, :NEW_Nama_Serve' +
+        'r_Cabang, '
+      
+        '  :NEW_Tgl_Closing, :NEW_Biaya_Member_Premium, :NEW_Pre_No_Membe' +
+        'r_Premium, '
+      
+        '  :NEW_Last_Reindex, :NEW_Last_Reindex_Bulanan, :NEW_Last_Info_B' +
+        'arang, '
+      
+        '  :NEW_Tempo_Expired_PO, :NEW_Pembulatan_Min_Order, :NEW_Kode_Ar' +
+        'ea, '
+      '  :NEW_Path_Folder_Inbox_CSV, :NEW_Path_Folder_Outbox_CSV, '
+      
+        '  :NEW_Path_Folder_Master_CSV, :NEW_Interval_Get_Inbox, :NEW_Tim' +
+        'e_Send_Master_CSV, '
+      
+        '  :NEW_Pembulatan_Min_Order_Gd, :NEW_Path_Folder_Backup, :NEW_No' +
+        'te_BM1, '
+      '  :NEW_Note_BM2, :NEW_Note_BM3, :NEW_Note_BM4, :NEW_Zone_Id, '
+      
+        '  :NEW_Time_Last_Upload, :NEW_Time_Last_Finish, :NEW_Record_PO_U' +
+        'pload, '
+      '  :NEW_Record_DetPO_Upload, :NEW_Record_Penjualan_Upload, '
+      
+        '  :NEW_Record_DetPenjualan_Upload, :NEW_Time_Upload, :NEW_Reuplo' +
+        'ad, '
+      
+        '  :NEW_Outlet_ID, :NEW_Last_Date_VM, :NEW_Persen_New_VM, :NEW_Pe' +
+        'rsen_Update_VM, '
+      
+        '  :NEW_Auto_Upload_PO, :NEW_Program_Version, :NEW_Version_Number' +
+        ', '
+      
+        '  :NEW_Version_Number_Group, :NEW_Tgl_Awal_Pareto, :NEW_Tgl_Akhi' +
+        'r_Pareto, '
+      
+        '  :NEW_Last_Date_Pareto, :NEW_Program_Version_C, :NEW_Version_Nu' +
+        'mber_C, '
+      
+        '  :NEW_Version_Number_Group_C, :NEW_Type_Security, :NEW_Path_Upd' +
+        'ate_Program, '
+      
+        '  :NEW_App_Update_Url, :NEW_Connected_Internet, :NEW_Jenis_Konek' +
+        ', '
+      
+        '  :NEW_AutoPO_Gudang, :NEW_AutoPO_Supplier, :NEW_Waktu_AutoPO_Ak' +
+        'hir, '
+      
+        '  :NEW_AutoPO_24HF, :NEW_Tgl_Posting, :NEW_Note_RB1, :NEW_Note_R' +
+        'B2, '
+      
+        '  :NEW_Note_RB3, :NEW_Note_RB4, :NEW_Kode_DC, :NEW_Active_eStore' +
+        ', '
+      
+        '  :NEW_eStore_Stock, :NEW_PPN_Value, :NEW_PPN_Div, :NEW_Allow_PB' +
+        '_Manual, '
+      
+        '  :NEW_Independent_Store, :NEW_CekMemberOnline, :NEW_Company_Nam' +
+        'e, '
+      '  :NEW_Company_Address, :NEW_Company_Telp, :NEW_FingerPrint)')
+    ModifySQL.Strings = (
+      'UPDATE Setup'
+      
+        'SET Header1 = :NEW_Header1, Header2 = :NEW_Header2, Header3 = :N' +
+        'EW_Header3, '
+      
+        '  Header4 = :NEW_Header4, Footer1 = :NEW_Footer1, Footer2 = :NEW' +
+        '_Footer2, '
+      
+        '  Footer3 = :NEW_Footer3, Footer4 = :NEW_Footer4, Footer5 = :NEW' +
+        '_Footer5, '
+      
+        '  Footer6 = :NEW_Footer6, Footer7 = :NEW_Footer7, Footer8 = :NEW' +
+        '_Footer8, '
+      
+        '  Footer9 = :NEW_Footer9, Footer10 = :NEW_Footer10, Jangka_Waktu' +
+        '_Stock = :NEW_Jangka_Waktu_Stock, '
+      
+        '  Kode_Lokasi = :NEW_Kode_Lokasi, Nama_Lokasi = :NEW_Nama_Lokasi' +
+        ', '
+      
+        '  Undian_Active = :NEW_Undian_Active, Kelipatan_Undian = :NEW_Ke' +
+        'lipatan_Undian, '
+      '  Max_Label1 = :NEW_Max_Label1, Max_Label2 = :NEW_Max_Label2, '
+      '  Max_Label3 = :NEW_Max_Label3, Max_Label4 = :NEW_Max_Label4, '
+      '  Max_Label5 = :NEW_Max_Label5, Max_Label6 = :NEW_Max_Label6, '
+      
+        '  Max_Label7 = :NEW_Max_Label7, Tgl_Tutup_Buku = :NEW_Tgl_Tutup_' +
+        'Buku, '
+      
+        '  Nilai_Transaksi_Member = :NEW_Nilai_Transaksi_Member, Batas_Tr' +
+        'ansaksi_Member = :NEW_Batas_Transaksi_Member, '
+      '  Biaya_Perpanjangan_Member = :NEW_Biaya_Perpanjangan_Member, '
+      '  FooterPajak = :NEW_FooterPajak, DetailBKP = :NEW_DetailBKP, '
+      
+        '  FooterClandys01 = :NEW_FooterClandys01, FooterClandys02 = :NEW' +
+        '_FooterClandys02, '
+      
+        '  FooterClandys03 = :NEW_FooterClandys03, FooterClandys04 = :NEW' +
+        '_FooterClandys04, '
+      
+        '  FooterClandys05 = :NEW_FooterClandys05, FooterClandys06 = :NEW' +
+        '_FooterClandys06, '
+      
+        '  FooterClandys07 = :NEW_FooterClandys07, FooterClandys08 = :NEW' +
+        '_FooterClandys08, '
+      
+        '  FooterClandys09 = :NEW_FooterClandys09, FooterClandys10 = :NEW' +
+        '_FooterClandys10, '
+      
+        '  ServerName = :NEW_ServerName, Nama_Database = :NEW_Nama_Databa' +
+        'se, '
+      
+        '  UserId_Elevas = :NEW_UserId_Elevas, Kode_Store_Elevas = :NEW_K' +
+        'ode_Store_Elevas, '
+      
+        '  Kode_Branch_Elevas = :NEW_Kode_Branch_Elevas, Nama_Server_Guda' +
+        'ng = :NEW_Nama_Server_Gudang, '
+      
+        '  Nama_Database_Gudang = :NEW_Nama_Database_Gudang, Tgl_Sinkron_' +
+        'Akhir = :NEW_Tgl_Sinkron_Akhir, '
+      
+        '  Waktu_Sinkron_Akhir = :NEW_Waktu_Sinkron_Akhir, Jadwal_Sinkron' +
+        ' = :NEW_Jadwal_Sinkron, '
+      
+        '  Nama_Server_Cabang = :NEW_Nama_Server_Cabang, Tgl_Closing = :N' +
+        'EW_Tgl_Closing, '
+      
+        '  Biaya_Member_Premium = :NEW_Biaya_Member_Premium, Pre_No_Membe' +
+        'r_Premium = :NEW_Pre_No_Member_Premium, '
+      
+        '  Last_Reindex = :NEW_Last_Reindex, Last_Reindex_Bulanan = :NEW_' +
+        'Last_Reindex_Bulanan, '
+      
+        '  Last_Info_Barang = :NEW_Last_Info_Barang, Tempo_Expired_PO = :' +
+        'NEW_Tempo_Expired_PO, '
+      
+        '  Pembulatan_Min_Order = :NEW_Pembulatan_Min_Order, Kode_Area = ' +
+        ':NEW_Kode_Area, '
+      
+        '  Path_Folder_Inbox_CSV = :NEW_Path_Folder_Inbox_CSV, Path_Folde' +
+        'r_Outbox_CSV = :NEW_Path_Folder_Outbox_CSV, '
+      
+        '  Path_Folder_Master_CSV = :NEW_Path_Folder_Master_CSV, Interval' +
+        '_Get_Inbox = :NEW_Interval_Get_Inbox, '
+      
+        '  Time_Send_Master_CSV = :NEW_Time_Send_Master_CSV, Pembulatan_M' +
+        'in_Order_Gd = :NEW_Pembulatan_Min_Order_Gd, '
+      
+        '  Path_Folder_Backup = :NEW_Path_Folder_Backup, Note_BM1 = :NEW_' +
+        'Note_BM1, '
+      
+        '  Note_BM2 = :NEW_Note_BM2, Note_BM3 = :NEW_Note_BM3, Note_BM4 =' +
+        ' :NEW_Note_BM4, '
+      
+        '  Zone_Id = :NEW_Zone_Id, Time_Last_Upload = :NEW_Time_Last_Uplo' +
+        'ad, '
+      
+        '  Time_Last_Finish = :NEW_Time_Last_Finish, Record_PO_Upload = :' +
+        'NEW_Record_PO_Upload, '
+      
+        '  Record_DetPO_Upload = :NEW_Record_DetPO_Upload, Record_Penjual' +
+        'an_Upload = :NEW_Record_Penjualan_Upload, '
+      '  Record_DetPenjualan_Upload = :NEW_Record_DetPenjualan_Upload, '
+      '  Time_Upload = :NEW_Time_Upload, Reupload = :NEW_Reupload, '
+      '  Outlet_ID = :NEW_Outlet_ID, Last_Date_VM = :NEW_Last_Date_VM, '
+      
+        '  Persen_New_VM = :NEW_Persen_New_VM, Persen_Update_VM = :NEW_Pe' +
+        'rsen_Update_VM, '
+      
+        '  Auto_Upload_PO = :NEW_Auto_Upload_PO, Program_Version = :NEW_P' +
+        'rogram_Version, '
+      
+        '  Version_Number = :NEW_Version_Number, Version_Number_Group = :' +
+        'NEW_Version_Number_Group, '
+      
+        '  Tgl_Awal_Pareto = :NEW_Tgl_Awal_Pareto, Tgl_Akhir_Pareto = :NE' +
+        'W_Tgl_Akhir_Pareto, '
+      
+        '  Last_Date_Pareto = :NEW_Last_Date_Pareto, Program_Version_C = ' +
+        ':NEW_Program_Version_C, '
+      
+        '  Version_Number_C = :NEW_Version_Number_C, Version_Number_Group' +
+        '_C = :NEW_Version_Number_Group_C, '
+      
+        '  Type_Security = :NEW_Type_Security, Path_Update_Program = :NEW' +
+        '_Path_Update_Program, '
+      
+        '  App_Update_Url = :NEW_App_Update_Url, Connected_Internet = :NE' +
+        'W_Connected_Internet, '
+      
+        '  Jenis_Konek = :NEW_Jenis_Konek, AutoPO_Gudang = :NEW_AutoPO_Gu' +
+        'dang, '
+      
+        '  AutoPO_Supplier = :NEW_AutoPO_Supplier, Waktu_AutoPO_Akhir = :' +
+        'NEW_Waktu_AutoPO_Akhir, '
+      
+        '  AutoPO_24HF = :NEW_AutoPO_24HF, Tgl_Posting = :NEW_Tgl_Posting' +
+        ', '
+      
+        '  Note_RB1 = :NEW_Note_RB1, Note_RB2 = :NEW_Note_RB2, Note_RB3 =' +
+        ' :NEW_Note_RB3, '
+      
+        '  Note_RB4 = :NEW_Note_RB4, Kode_DC = :NEW_Kode_DC, Active_eStor' +
+        'e = :NEW_Active_eStore, '
+      '  eStore_Stock = :NEW_eStore_Stock, PPN_Value = :NEW_PPN_Value, '
+      
+        '  PPN_Div = :NEW_PPN_Div, Allow_PB_Manual = :NEW_Allow_PB_Manual' +
+        ', '
+      
+        '  Independent_Store = :NEW_Independent_Store, CekMemberOnline = ' +
+        ':NEW_CekMemberOnline, '
+      
+        '  Company_Name = :NEW_Company_Name, Company_Address = :NEW_Compa' +
+        'ny_Address, '
+      
+        '  Company_Telp = :NEW_Company_Telp, FingerPrint = :NEW_FingerPri' +
+        'nt'
+      
+        'WHERE Header1 = :OLD_Header1 AND Header2 = :OLD_Header2 AND Head' +
+        'er3 = :OLD_Header3 AND '
+      
+        '  Header4 = :OLD_Header4 AND Footer1 = :OLD_Footer1 AND Footer2 ' +
+        '= :OLD_Footer2 AND '
+      
+        '  Footer3 = :OLD_Footer3 AND Footer4 = :OLD_Footer4 AND Footer5 ' +
+        '= :OLD_Footer5 AND '
+      
+        '  Footer6 = :OLD_Footer6 AND Footer7 = :OLD_Footer7 AND Footer8 ' +
+        '= :OLD_Footer8 AND '
+      '  Footer9 = :OLD_Footer9 AND Footer10 = :OLD_Footer10')
+    DeleteSQL.Strings = (
+      'DELETE FROM Setup'
+      
+        'WHERE Header1 = :OLD_Header1 AND Header2 = :OLD_Header2 AND Head' +
+        'er3 = :OLD_Header3 AND '
+      
+        '  Header4 = :OLD_Header4 AND Footer1 = :OLD_Footer1 AND Footer2 ' +
+        '= :OLD_Footer2 AND '
+      
+        '  Footer3 = :OLD_Footer3 AND Footer4 = :OLD_Footer4 AND Footer5 ' +
+        '= :OLD_Footer5 AND '
+      
+        '  Footer6 = :OLD_Footer6 AND Footer7 = :OLD_Footer7 AND Footer8 ' +
+        '= :OLD_Footer8 AND '
+      '  Footer9 = :OLD_Footer9 AND Footer10 = :OLD_Footer10')
+    FetchRowSQL.Strings = (
+      
+        'SELECT Header1, Header2, Header3, Header4, Footer1, Footer2, Foo' +
+        'ter3, '
+      
+        '  Footer4, Footer5, Footer6, Footer7, Footer8, Footer9, Footer10' +
+        ', '
+      '  Jangka_Waktu_Stock, Kode_Lokasi, Nama_Lokasi, Undian_Active, '
+      
+        '  Kelipatan_Undian, Max_Label1, Max_Label2, Max_Label3, Max_Labe' +
+        'l4, '
+      
+        '  Max_Label5, Max_Label6, Max_Label7, Tgl_Tutup_Buku, Nilai_Tran' +
+        'saksi_Member, '
+      
+        '  Batas_Transaksi_Member, Biaya_Perpanjangan_Member, FooterPajak' +
+        ', '
+      '  DetailBKP, FooterClandys01, FooterClandys02, FooterClandys03, '
+      
+        '  FooterClandys04, FooterClandys05, FooterClandys06, FooterCland' +
+        'ys07, '
+      
+        '  FooterClandys08, FooterClandys09, FooterClandys10, ServerName,' +
+        ' '
+      
+        '  Nama_Database, UserId_Elevas, Kode_Store_Elevas, Kode_Branch_E' +
+        'levas, '
+      '  Nama_Server_Gudang, Nama_Database_Gudang, Tgl_Sinkron_Akhir, '
+      '  Waktu_Sinkron_Akhir, Jadwal_Sinkron, Nama_Server_Cabang, '
+      '  Tgl_Closing, Biaya_Member_Premium, Pre_No_Member_Premium, '
+      
+        '  Last_Reindex, Last_Reindex_Bulanan, Last_Info_Barang, Tempo_Ex' +
+        'pired_PO, '
+      '  Pembulatan_Min_Order, Kode_Area, Path_Folder_Inbox_CSV, '
+      
+        '  Path_Folder_Outbox_CSV, Path_Folder_Master_CSV, Interval_Get_I' +
+        'nbox, '
+      
+        '  Time_Send_Master_CSV, Pembulatan_Min_Order_Gd, Path_Folder_Bac' +
+        'kup, '
+      
+        '  Note_BM1, Note_BM2, Note_BM3, Note_BM4, Zone_Id, Time_Last_Upl' +
+        'oad, '
+      '  Time_Last_Finish, Record_PO_Upload, Record_DetPO_Upload, '
+      
+        '  Record_Penjualan_Upload, Record_DetPenjualan_Upload, Time_Uplo' +
+        'ad, '
+      
+        '  Reupload, Outlet_ID, Last_Date_VM, Persen_New_VM, Persen_Updat' +
+        'e_VM, '
+      
+        '  Auto_Upload_PO, Program_Version, Version_Number, Version_Numbe' +
+        'r_Group, '
+      
+        '  Tgl_Awal_Pareto, Tgl_Akhir_Pareto, Last_Date_Pareto, Program_V' +
+        'ersion_C, '
+      '  Version_Number_C, Version_Number_Group_C, Type_Security, '
+      '  Path_Update_Program, App_Update_Url, Connected_Internet, '
+      
+        '  Jenis_Konek, AutoPO_Gudang, AutoPO_Supplier, Waktu_AutoPO_Akhi' +
+        'r, '
+      '  AutoPO_24HF, Tgl_Posting, Note_RB1, Note_RB2, Note_RB3, '
+      '  Note_RB4, Kode_DC, Active_eStore, eStore_Stock, PPN_Value, '
+      '  PPN_Div, Allow_PB_Manual, Independent_Store, CekMemberOnline, '
+      '  Company_Name, Company_Address, Company_Telp, FingerPrint'
+      'FROM Setup'
+      
+        'WHERE Header1 = :Header1 AND Header2 = :Header2 AND Header3 = :H' +
+        'eader3 AND '
+      
+        '  Header4 = :Header4 AND Footer1 = :Footer1 AND Footer2 = :Foote' +
+        'r2 AND '
+      
+        '  Footer3 = :Footer3 AND Footer4 = :Footer4 AND Footer5 = :Foote' +
+        'r5 AND '
+      
+        '  Footer6 = :Footer6 AND Footer7 = :Footer7 AND Footer8 = :Foote' +
+        'r8 AND '
+      '  Footer9 = :Footer9 AND Footer10 = :Footer10')
+    Left = 680
+    Top = 48
+  end
+  object FDUpdateSQLSetupLocal: TFDUpdateSQL
+    Connection = DatabaseLocal
+    InsertSQL.Strings = (
+      'INSERT INTO Setup'
+      '(Comp_ID, Comp_ID_Local, Printer, Header1, '
+      '  Header2, Header3, Header4, Footer1, '
+      '  Footer2, Footer3, Footer4, Footer5, '
+      '  Footer6, Footer7, Footer8, Footer9, '
+      '  Footer10, Nama_Server, Nama_Database, Nama_Server_Local, '
+      
+        '  Nama_Database_Local, Nama_Server_Master, Nama_Database_Master,' +
+        ' '
+      '  Kode_Lokasi, Nama_Lokasi, Tgl_Tutup_Buku, '
+      '  Nilai_Transaksi_Member, Batas_Transaksi_Member, '
+      '  Biaya_Perpanjangan_Member, FooterPajak, DetailBKP, '
+      '  FooterClandys01, FooterClandys02, FooterClandys03, '
+      '  FooterClandys04, FooterClandys05, FooterClandys06, '
+      '  FooterClandys07, FooterClandys08, FooterClandys09, '
+      '  FooterClandys10, UserId_Elevas, Kode_Store_Elevas, '
+      
+        '  Kode_Branch_Elevas, Biaya_Member_Premium, Pre_No_Member_Premiu' +
+        'm, '
+      '  Max_Item_Kasir, Program_Version_C, Version_Number_C, '
+      '  Version_Number_Group_C, Type_Security, Zone_Id, '
+      '  Kode_Area, App_Update_Url, Connected_Internet, '
+      '  PPN_Div, PPN_Value, MesinEDCBCA, Nama_Port, '
+      '  Baud_Rate, Data_Bits, Stop_Bits, Parity, '
+      '  TestMode, PAN, ExpiryYear, ExpiryMonth, '
+      '  CekMemberOnline, MesinEDCMandiri, MesinEDCBNI, '
+      '  Nama_Port_Mandiri, Nama_Port_BNI, FingerPrint)'
+      
+        'VALUES (:NEW_Comp_ID, :NEW_Comp_ID_Local, :NEW_Printer, :NEW_Hea' +
+        'der1, '
+      '  :NEW_Header2, :NEW_Header3, :NEW_Header4, :NEW_Footer1, '
+      '  :NEW_Footer2, :NEW_Footer3, :NEW_Footer4, :NEW_Footer5, '
+      '  :NEW_Footer6, :NEW_Footer7, :NEW_Footer8, :NEW_Footer9, '
+      
+        '  :NEW_Footer10, :NEW_Nama_Server, :NEW_Nama_Database, :NEW_Nama' +
+        '_Server_Local, '
+      
+        '  :NEW_Nama_Database_Local, :NEW_Nama_Server_Master, :NEW_Nama_D' +
+        'atabase_Master, '
+      '  :NEW_Kode_Lokasi, :NEW_Nama_Lokasi, :NEW_Tgl_Tutup_Buku, '
+      '  :NEW_Nilai_Transaksi_Member, :NEW_Batas_Transaksi_Member, '
+      
+        '  :NEW_Biaya_Perpanjangan_Member, :NEW_FooterPajak, :NEW_DetailB' +
+        'KP, '
+      
+        '  :NEW_FooterClandys01, :NEW_FooterClandys02, :NEW_FooterClandys' +
+        '03, '
+      
+        '  :NEW_FooterClandys04, :NEW_FooterClandys05, :NEW_FooterClandys' +
+        '06, '
+      
+        '  :NEW_FooterClandys07, :NEW_FooterClandys08, :NEW_FooterClandys' +
+        '09, '
+      
+        '  :NEW_FooterClandys10, :NEW_UserId_Elevas, :NEW_Kode_Store_Elev' +
+        'as, '
+      
+        '  :NEW_Kode_Branch_Elevas, :NEW_Biaya_Member_Premium, :NEW_Pre_N' +
+        'o_Member_Premium, '
+      
+        '  :NEW_Max_Item_Kasir, :NEW_Program_Version_C, :NEW_Version_Numb' +
+        'er_C, '
+      
+        '  :NEW_Version_Number_Group_C, :NEW_Type_Security, :NEW_Zone_Id,' +
+        ' '
+      '  :NEW_Kode_Area, :NEW_App_Update_Url, :NEW_Connected_Internet, '
+      
+        '  :NEW_PPN_Div, :NEW_PPN_Value, :NEW_MesinEDCBCA, :NEW_Nama_Port' +
+        ', '
+      '  :NEW_Baud_Rate, :NEW_Data_Bits, :NEW_Stop_Bits, :NEW_Parity, '
+      '  :NEW_TestMode, :NEW_PAN, :NEW_ExpiryYear, :NEW_ExpiryMonth, '
+      '  :NEW_CekMemberOnline, :NEW_MesinEDCMandiri, :NEW_MesinEDCBNI, '
+      '  :NEW_Nama_Port_Mandiri, :NEW_Nama_Port_BNI, :NEW_FingerPrint)')
+    ModifySQL.Strings = (
+      'UPDATE Setup'
+      'SET Comp_ID = :NEW_Comp_ID, Comp_ID_Local = :NEW_Comp_ID_Local, '
+      
+        '  Printer = :NEW_Printer, Header1 = :NEW_Header1, Header2 = :NEW' +
+        '_Header2, '
+      
+        '  Header3 = :NEW_Header3, Header4 = :NEW_Header4, Footer1 = :NEW' +
+        '_Footer1, '
+      
+        '  Footer2 = :NEW_Footer2, Footer3 = :NEW_Footer3, Footer4 = :NEW' +
+        '_Footer4, '
+      
+        '  Footer5 = :NEW_Footer5, Footer6 = :NEW_Footer6, Footer7 = :NEW' +
+        '_Footer7, '
+      
+        '  Footer8 = :NEW_Footer8, Footer9 = :NEW_Footer9, Footer10 = :NE' +
+        'W_Footer10, '
+      
+        '  Nama_Server = :NEW_Nama_Server, Nama_Database = :NEW_Nama_Data' +
+        'base, '
+      
+        '  Nama_Server_Local = :NEW_Nama_Server_Local, Nama_Database_Loca' +
+        'l = :NEW_Nama_Database_Local, '
+      
+        '  Nama_Server_Master = :NEW_Nama_Server_Master, Nama_Database_Ma' +
+        'ster = :NEW_Nama_Database_Master, '
+      
+        '  Kode_Lokasi = :NEW_Kode_Lokasi, Nama_Lokasi = :NEW_Nama_Lokasi' +
+        ', '
+      
+        '  Tgl_Tutup_Buku = :NEW_Tgl_Tutup_Buku, Nilai_Transaksi_Member =' +
+        ' :NEW_Nilai_Transaksi_Member, '
+      
+        '  Batas_Transaksi_Member = :NEW_Batas_Transaksi_Member, Biaya_Pe' +
+        'rpanjangan_Member = :NEW_Biaya_Perpanjangan_Member, '
+      '  FooterPajak = :NEW_FooterPajak, DetailBKP = :NEW_DetailBKP, '
+      
+        '  FooterClandys01 = :NEW_FooterClandys01, FooterClandys02 = :NEW' +
+        '_FooterClandys02, '
+      
+        '  FooterClandys03 = :NEW_FooterClandys03, FooterClandys04 = :NEW' +
+        '_FooterClandys04, '
+      
+        '  FooterClandys05 = :NEW_FooterClandys05, FooterClandys06 = :NEW' +
+        '_FooterClandys06, '
+      
+        '  FooterClandys07 = :NEW_FooterClandys07, FooterClandys08 = :NEW' +
+        '_FooterClandys08, '
+      
+        '  FooterClandys09 = :NEW_FooterClandys09, FooterClandys10 = :NEW' +
+        '_FooterClandys10, '
+      
+        '  UserId_Elevas = :NEW_UserId_Elevas, Kode_Store_Elevas = :NEW_K' +
+        'ode_Store_Elevas, '
+      
+        '  Kode_Branch_Elevas = :NEW_Kode_Branch_Elevas, Biaya_Member_Pre' +
+        'mium = :NEW_Biaya_Member_Premium, '
+      
+        '  Pre_No_Member_Premium = :NEW_Pre_No_Member_Premium, Max_Item_K' +
+        'asir = :NEW_Max_Item_Kasir, '
+      
+        '  Program_Version_C = :NEW_Program_Version_C, Version_Number_C =' +
+        ' :NEW_Version_Number_C, '
+      
+        '  Version_Number_Group_C = :NEW_Version_Number_Group_C, Type_Sec' +
+        'urity = :NEW_Type_Security, '
+      
+        '  Zone_Id = :NEW_Zone_Id, Kode_Area = :NEW_Kode_Area, App_Update' +
+        '_Url = :NEW_App_Update_Url, '
+      
+        '  Connected_Internet = :NEW_Connected_Internet, PPN_Div = :NEW_P' +
+        'PN_Div, '
+      '  PPN_Value = :NEW_PPN_Value, MesinEDCBCA = :NEW_MesinEDCBCA, '
+      '  Nama_Port = :NEW_Nama_Port, Baud_Rate = :NEW_Baud_Rate, '
+      '  Data_Bits = :NEW_Data_Bits, Stop_Bits = :NEW_Stop_Bits, '
+      
+        '  Parity = :NEW_Parity, TestMode = :NEW_TestMode, PAN = :NEW_PAN' +
+        ', '
+      '  ExpiryYear = :NEW_ExpiryYear, ExpiryMonth = :NEW_ExpiryMonth, '
+      
+        '  CekMemberOnline = :NEW_CekMemberOnline, MesinEDCMandiri = :NEW' +
+        '_MesinEDCMandiri, '
+      
+        '  MesinEDCBNI = :NEW_MesinEDCBNI, Nama_Port_Mandiri = :NEW_Nama_' +
+        'Port_Mandiri, '
+      
+        '  Nama_Port_BNI = :NEW_Nama_Port_BNI, FingerPrint = :NEW_FingerP' +
+        'rint'
+      
+        'WHERE Comp_ID = :OLD_Comp_ID AND Comp_ID_Local = :OLD_Comp_ID_Lo' +
+        'cal AND '
+      
+        '  Printer = :OLD_Printer AND Header1 = :OLD_Header1 AND Header2 ' +
+        '= :OLD_Header2 AND '
+      
+        '  Header3 = :OLD_Header3 AND Header4 = :OLD_Header4 AND Footer1 ' +
+        '= :OLD_Footer1 AND '
+      
+        '  Footer2 = :OLD_Footer2 AND Footer3 = :OLD_Footer3 AND Footer4 ' +
+        '= :OLD_Footer4 AND '
+      
+        '  Footer5 = :OLD_Footer5 AND Footer6 = :OLD_Footer6 AND Footer7 ' +
+        '= :OLD_Footer7 AND '
+      
+        '  Footer8 = :OLD_Footer8 AND Footer9 = :OLD_Footer9 AND Footer10' +
+        ' = :OLD_Footer10')
+    DeleteSQL.Strings = (
+      'DELETE FROM Setup'
+      
+        'WHERE Comp_ID = :OLD_Comp_ID AND Comp_ID_Local = :OLD_Comp_ID_Lo' +
+        'cal AND '
+      
+        '  Printer = :OLD_Printer AND Header1 = :OLD_Header1 AND Header2 ' +
+        '= :OLD_Header2 AND '
+      
+        '  Header3 = :OLD_Header3 AND Header4 = :OLD_Header4 AND Footer1 ' +
+        '= :OLD_Footer1 AND '
+      
+        '  Footer2 = :OLD_Footer2 AND Footer3 = :OLD_Footer3 AND Footer4 ' +
+        '= :OLD_Footer4 AND '
+      
+        '  Footer5 = :OLD_Footer5 AND Footer6 = :OLD_Footer6 AND Footer7 ' +
+        '= :OLD_Footer7 AND '
+      
+        '  Footer8 = :OLD_Footer8 AND Footer9 = :OLD_Footer9 AND Footer10' +
+        ' = :OLD_Footer10')
+    FetchRowSQL.Strings = (
+      
+        'SELECT Comp_ID, Comp_ID_Local, Printer, Header1, Header2, Header' +
+        '3, '
+      
+        '  Header4, Footer1, Footer2, Footer3, Footer4, Footer5, Footer6,' +
+        ' '
+      
+        '  Footer7, Footer8, Footer9, Footer10, Nama_Server, Nama_Databas' +
+        'e, '
+      '  Nama_Server_Local, Nama_Database_Local, Nama_Server_Master, '
+      
+        '  Nama_Database_Master, Kode_Lokasi, Nama_Lokasi, Tgl_Tutup_Buku' +
+        ', '
+      
+        '  Nilai_Transaksi_Member, Batas_Transaksi_Member, Biaya_Perpanja' +
+        'ngan_Member, '
+      '  FooterPajak, DetailBKP, FooterClandys01, FooterClandys02, '
+      
+        '  FooterClandys03, FooterClandys04, FooterClandys05, FooterCland' +
+        'ys06, '
+      
+        '  FooterClandys07, FooterClandys08, FooterClandys09, FooterCland' +
+        'ys10, '
+      
+        '  UserId_Elevas, Kode_Store_Elevas, Kode_Branch_Elevas, Biaya_Me' +
+        'mber_Premium, '
+      '  Pre_No_Member_Premium, Max_Item_Kasir, Program_Version_C, '
+      '  Version_Number_C, Version_Number_Group_C, Type_Security, '
+      '  Zone_Id, Kode_Area, App_Update_Url, Connected_Internet, '
+      
+        '  PPN_Div, PPN_Value, MesinEDCBCA, Nama_Port, Baud_Rate, Data_Bi' +
+        'ts, '
+      '  Stop_Bits, Parity, TestMode, PAN, ExpiryYear, ExpiryMonth, '
+      
+        '  CekMemberOnline, MesinEDCMandiri, MesinEDCBNI, Nama_Port_Mandi' +
+        'ri, '
+      '  Nama_Port_BNI, FingerPrint'
+      'FROM Setup'
+      
+        'WHERE Comp_ID = :Comp_ID AND Comp_ID_Local = :Comp_ID_Local AND ' +
+        'Printer = :Printer AND '
+      
+        '  Header1 = :Header1 AND Header2 = :Header2 AND Header3 = :Heade' +
+        'r3 AND '
+      
+        '  Header4 = :Header4 AND Footer1 = :Footer1 AND Footer2 = :Foote' +
+        'r2 AND '
+      
+        '  Footer3 = :Footer3 AND Footer4 = :Footer4 AND Footer5 = :Foote' +
+        'r5 AND '
+      
+        '  Footer6 = :Footer6 AND Footer7 = :Footer7 AND Footer8 = :Foote' +
+        'r8 AND '
+      '  Footer9 = :Footer9 AND Footer10 = :Footer10')
+    Left = 680
+    Top = 136
+  end
+end

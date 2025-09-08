@@ -1,0 +1,286 @@
+unit EntryPembelian;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, vcl.Wwdbedit,
+  vcl.Wwdotdot, vcl.Wwdbcomb, Vcl.Mask, RxToolEdit, RxCurrEdit, Vcl.Buttons,
+  Vcl.ExtCtrls, Vcl.Grids, vcl.wwdbigrd, vcl.wwdbgrid, vcl.Wwdbdatetimepicker,
+  vcl.wwdblook, RxCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+
+type
+  TFrmEntryPembelian = class(TForm)
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label21: TLabel;
+    ButtonCari: TSpeedButton;
+    Tempo: TLabel;
+    Label23: TLabel;
+    Label14: TLabel;
+    LblInfo: TLabel;
+    ButtonMasterBarang: TSpeedButton;
+    Label34: TLabel;
+    RxLabel5: TRxLabel;
+    Label17: TLabel;
+    EditTgl: TwwDBDateTimePicker;
+    DBGridDetPembelian: TwwDBGrid;
+    PanelButton: TPanel;
+    ButtonSave: TBitBtn;
+    ButtonCancel: TBitBtn;
+    GroupBoxTotalPembelian: TGroupBox;
+    GrandTotal: TCurrencyEdit;
+    GroupBoxEntry: TGroupBox;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label20: TLabel;
+    ButtonFind: TSpeedButton;
+    Label26: TLabel;
+    Label22: TLabel;
+    Label15: TLabel;
+    LabelG: TLabel;
+    LabelT: TLabel;
+    LabelH: TLabel;
+    LblStockGudang: TLabel;
+    LabelGH: TLabel;
+    LabelTH: TLabel;
+    LabelHH: TLabel;
+    ButtonBlank: TSpeedButton;
+    Label16: TLabel;
+    EditQtyGudang: TCurrencyEdit;
+    EditHargaBeli: TCurrencyEdit;
+    EditHargaBeliTotal: TCurrencyEdit;
+    EditDisc1: TCurrencyEdit;
+    EditDisc2: TCurrencyEdit;
+    EditHargaBeliAkhir: TCurrencyEdit;
+    EditStockGudang: TCurrencyEdit;
+    ButtonOK: TBitBtn;
+    EditDisc3: TCurrencyEdit;
+    EditSatuanBonus: TwwDBComboBox;
+    EditQtyToko: TCurrencyEdit;
+    EditQtyHadiah: TCurrencyEdit;
+    EditDiscQtyGudang: TCurrencyEdit;
+    EditDiscQtyToko: TCurrencyEdit;
+    EditDiscQtyHadiah: TCurrencyEdit;
+    EditHrgBeliLama: TCurrencyEdit;
+    Panel1: TPanel;
+    Total: TRxLabel;
+    RxLabel1: TRxLabel;
+    RxLabel2: TRxLabel;
+    RxLabel4: TRxLabel;
+    TotalPembelian: TCurrencyEdit;
+    EditTotalPPN: TCurrencyEdit;
+    TotalDiscCash: TCurrencyEdit;
+    EditAdjustment: TCurrencyEdit;
+    EditNoFaktur: TEdit;
+    EditNoNota: TEdit;
+    EditDiscGlobal: TCurrencyEdit;
+    EditPPN: TCurrencyEdit;
+    EditTempo: TCurrencyEdit;
+    EditPenerima: TEdit;
+    BarangDataSource: TDataSource;
+    BarangQuery: TFDQuery;
+    editKodeBarang: TEdit;
+    editNamaBarang: TEdit;
+    SatBarangQuery: TFDQuery;
+    editSatuan: TwwDBLookupCombo;
+    DataSourcePembelian: TDataSource;
+    QueryPembelian: TFDQuery;
+    QuerySupplier: TFDQuery;
+    DataSourceDetPembelian: TDataSource;
+    QueryDetPembelian: TFDQuery;
+    editKodeSupplier: TEdit;
+    editNamaSupplier: TEdit;
+    wwDBLookupCombo1: TwwDBLookupCombo;
+    procedure ButtonFindClick(Sender: TObject);
+    procedure LoadSatuanForBarang(const KodeBrg: string);
+    procedure editSatuanCloseUp(Sender: TObject; LookupTable,
+      FillTable: TDataSet; modified: Boolean);
+    procedure ButtonCariClick(Sender: TObject);
+    procedure EditNamaSupplierCloseUp(Sender: TObject; LookupTable,
+      FillTable: TDataSet; modified: Boolean);
+    procedure EditNamaSupplierDropDown(Sender: TObject);
+    procedure ButtonBlankClick(Sender: TObject);
+    procedure BlankEntry;
+    procedure HitungHargaBeliTotal;
+    procedure editSatuanChange(Sender: TObject);
+    procedure EditQtyGudangChange(Sender: TObject);
+    procedure EditDisc1Change(Sender: TObject);
+    procedure EditDisc2Change(Sender: TObject);
+    procedure EditDisc3Change(Sender: TObject);
+    procedure EditDiscGlobalChange(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmEntryPembelian: TFrmEntryPembelian;
+  SatBarang: String;
+//  Kode_Paket: String;
+
+
+
+implementation
+
+uses DataModule, CariBarang, CariSupplier;
+
+{$R *.dfm}
+
+procedure TfrmEntryPembelian.BlankEntry;
+begin
+    EditKodeBarang.Text:='';
+    EditNamaBarang.Text:='';
+    EditQtyGudang.Text:='';
+    EditQtyToko.Text:='';
+    EditQtyHadiah.Text:='';
+    EditDiscQtyGudang.Text:='';
+    EditDiscQtyToko.Text:='';
+    EditDiscQtyHadiah.Text:='';
+    EditSatuan.Text:='';
+    EditHargaBeli.Text:='';
+    EditHargaBeliTotal.Text:='';
+    EditDisc1.Text:='';
+    EditDisc2.Text:='';
+    EditDisc3.Text:='';
+    EditStockGudang.Text:='';
+//    editStockToko.Text:='';
+//    EditStockHadiah.Text:='';
+    EditHargaBeliAkhir.Text:='';
+    EditDiscQtyGudang.Text:='';
+    EditDiscQtyToko.Text:='';
+    EditDiscQtyHadiah.Text:='';
+    EditSatuanBonus.Text:='';
+    EditAdjustment.Text:='';
+    EditHrgBeliLama.Text:='';
+//    StateEdit:=False;
+end;
+
+procedure TFrmEntryPembelian.ButtonBlankClick(Sender: TObject);
+begin
+    BlankEntry;
+    editKodeBarang.SetFocus;
+end;
+
+procedure TFrmEntryPembelian.ButtonCariClick(Sender: TObject);
+begin
+    CallerFindSupplier:='Entry Pembelian';
+    FrmCariSupplier.ShowModal;
+end;
+
+procedure TFrmEntryPembelian.ButtonFindClick(Sender: TObject);
+begin
+     BarangQuery.Close;
+     SatBarangQuery.Close;
+     FrmCariBarang.ShowModal;
+end;
+
+procedure TFrmEntryPembelian.EditDisc1Change(Sender: TObject);
+begin
+    HitungHargaBeliTotal;
+end;
+
+
+procedure TFrmEntryPembelian.EditDisc2Change(Sender: TObject);
+begin
+    HitungHargaBeliTotal;
+end;
+
+procedure TFrmEntryPembelian.EditDisc3Change(Sender: TObject);
+begin
+    HitungHargaBeliTotal;
+end;
+
+procedure TFrmEntryPembelian.EditDiscGlobalChange(Sender: TObject);
+begin
+    HitungHargaBeliTotal;
+end;
+
+procedure TFrmEntryPembelian.EditNamaSupplierCloseUp(Sender: TObject;
+  LookupTable, FillTable: TDataSet; modified: Boolean);
+begin
+  if modified then
+    begin
+      SatBarang := QuerySupplier.FieldByName('Kode_Sup').AsString;
+    end;
+    QuerySupplier.Close;
+end;
+
+procedure TfrmEntryPembelian.HitungHargaBeliTotal;
+var
+    disc1, disc2, disc3, DiscCash: Double;
+begin
+    EditHargaBeliTotal.Value := editQtyGudang.Value * EditHargaBeli.Value;
+    if editQtyGudang.Value <> 0 then
+    begin
+        if EditDisc1.Value < 1 then
+        disc1:=EditHargaBeli.Value*editQtyGudang.Value*EditDisc1.Value
+        else disc1:=EditDisc1.Value*editQtyGudang.Value;
+
+        if EditDisc2.Value < 1 then
+        disc2:=(EditHargaBeli.Value*editQtyGudang.Value - disc1)*EditDisc2.Value
+        else disc2:=EditDisc2.Value*editQtyGudang.Value;
+
+        if EditDisc3.Value < 1 then
+        disc3:=(EditHargaBeli.Value*editQtyGudang.Value - disc1 - disc2)*EditDisc3.Value
+        else disc3:=EditDisc3.Value*editQtyGudang.Value;
+
+        if EditDiscGlobal.Value < 1 then
+        DiscCash:=(EditHargaBeli.Value*EditQtyGudang.Value - disc1 - disc2 - Disc3)*EditDiscGlobal.Value
+        else DiscCash:=0;
+
+        if EditQtyGudang.Value <> 0 then
+        EditHargaBeliAkhir.Value := ((EditHargaBeliTotal.Value - disc1 - disc2 - disc3 - DiscCash) + (EditHargaBeliTotal.Value - disc1 - disc2 - disc3 - DiscCash)*EditPPN.Value/100)/ EditQtyGudang.Value;
+    end
+    else EditHargaBeliAkhir.Value:=0;
+
+end;
+
+procedure TFrmEntryPembelian.EditNamaSupplierDropDown(Sender: TObject);
+begin
+  if not QuerySupplier.Active then
+    QuerySupplier.Open;
+end;
+
+procedure TFrmEntryPembelian.EditQtyGudangChange(Sender: TObject);
+begin
+    HitungHargaBeliTotal;
+end;
+
+procedure TFrmEntryPembelian.editSatuanChange(Sender: TObject);
+begin
+    EditStockGudang.Value := SatBarangQuery.FieldByName('Qty_Satuan').AsInteger;
+    EditHargaBeli.Value := SatBarangQuery.FieldByName('Harga_Beli').AsInteger;
+end;
+
+procedure TFrmEntryPembelian.editSatuanCloseUp(Sender: TObject; LookupTable,
+  FillTable: TDataSet; modified: Boolean);
+begin
+   if modified then
+  begin
+    SatBarang := SatBarangQuery.FieldByName('Satuan').AsString;
+  end;
+end;
+
+procedure TFrmEntryPembelian.LoadSatuanForBarang(const KodeBrg: string);
+begin
+  SatBarangQuery.Close;
+  SatBarangQuery.ParamByName('KodeBrg').DataType := ftString;
+  SatBarangQuery.ParamByName('KodeBrg').AsString := Trim(KodeBrg);
+  SatBarangQuery.Open;
+end;
+
+end.

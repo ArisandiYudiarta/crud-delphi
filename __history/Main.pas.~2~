@@ -1,0 +1,30 @@
+unit Main;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, AdvSmoothButton, AdvOfficePager;
+
+type
+  TForm1 = class(TForm)
+    AdvOfficePager1: TAdvOfficePager;
+    AdvOfficePager11: TAdvOfficePage;
+    AdvOfficePager12: TAdvOfficePage;
+    AdvOfficePager13: TAdvOfficePage;
+    ButtonCustomer: TAdvSmoothButton;
+    ButtonSupplier: TAdvSmoothButton;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+end.

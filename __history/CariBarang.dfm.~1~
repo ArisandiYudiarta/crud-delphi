@@ -1,0 +1,135 @@
+object FrmCariBarang: TFrmCariBarang
+  Left = 0
+  Top = 0
+  Caption = 'Form Cari Barang'
+  ClientHeight = 464
+  ClientWidth = 996
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object LabelCariBarang: TLabel
+    Left = 8
+    Top = 8
+    Width = 217
+    Height = 13
+    Caption = 'Potongan Kata dari Barang Yang Akan Di Cari'
+  end
+  object inputNamaBarang: TEdit
+    Left = 237
+    Top = 8
+    Width = 148
+    Height = 21
+    TabOrder = 0
+    OnChange = inputNamaBarangChange
+  end
+  object TBTampilProduk: TwwDBGrid
+    Left = 8
+    Top = 64
+    Width = 977
+    Height = 361
+    Selected.Strings = (
+      'Kode_Brg'#9'15'#9'Kode_Brg'
+      'Nama_Brg'#9'50'#9'Nama_Brg'
+      'Kode_Sup'#9'6'#9'Kode_Sup'
+      'Kode_Dept'#9'3'#9'Kode_Dept'
+      'Kode_Sub_Dept'#9'7'#9'Kode_Sub_Dept'
+      'Stock_Toko'#9'10'#9'Stock_Toko'
+      'Harga_Beli_Akhir'#9'10'#9'Harga_Beli_Akhir'
+      'Harga_Beli_Average'#9'10'#9'Harga_Beli_Average'
+      'Harga_Beli_Lama'#9'10'#9'Harga_Beli_Lama')
+    IniAttributes.Delimiter = ';;'
+    IniAttributes.UnicodeIniFile = False
+    TitleColor = clBtnFace
+    FixedCols = 0
+    ShowHorzScrollBar = True
+    DataSource = ProdukDataSource
+    TabOrder = 1
+    TitleAlignment = taLeftJustify
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    TitleLines = 1
+    TitleButtons = False
+  end
+  object btnAmbilNamaBarang: TBitBtn
+    Left = 784
+    Top = 431
+    Width = 75
+    Height = 25
+    Caption = 'Ambil'
+    Kind = bkOK
+    NumGlyphs = 2
+    TabOrder = 2
+  end
+  object BitBtn2: TBitBtn
+    Left = 888
+    Top = 431
+    Width = 75
+    Height = 25
+    Kind = bkCancel
+    NumGlyphs = 2
+    TabOrder = 3
+  end
+  object radioNama: TRadioButton
+    Left = 8
+    Top = 41
+    Width = 154
+    Height = 17
+    Caption = 'Berdasarkan Nama Barang'
+    TabOrder = 4
+  end
+  object radioKode: TRadioButton
+    Left = 184
+    Top = 41
+    Width = 153
+    Height = 17
+    Caption = 'Berdasarkan Kode Barang'
+    TabOrder = 5
+  end
+  object radioBarcode: TRadioButton
+    Left = 360
+    Top = 41
+    Width = 161
+    Height = 17
+    Caption = 'Berdasarkan Barcode Barang'
+    TabOrder = 6
+  end
+  object radioHargaJual: TRadioButton
+    Left = 552
+    Top = 41
+    Width = 169
+    Height = 17
+    Caption = 'Berdasarkan Harga Jual Barang'
+    TabOrder = 7
+  end
+  object btnSearchProduk: TBitBtn
+    Left = 391
+    Top = 8
+    Width = 75
+    Height = 25
+    Caption = 'Search'
+    TabOrder = 8
+    OnClick = btnSearchProdukClick
+  end
+  object ProdukDataSource: TDataSource
+    DataSet = QueryProduk
+    Left = 576
+    Top = 216
+  end
+  object QueryProduk: TFDQuery
+    Connection = DM.FDConnection
+    SQL.Strings = (
+      'select *'
+      'from Barang')
+    Left = 656
+    Top = 216
+  end
+end

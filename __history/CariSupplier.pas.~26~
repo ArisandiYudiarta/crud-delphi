@@ -1,0 +1,115 @@
+unit CariSupplier;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.Grids, vcl.wwdbigrd, vcl.wwdbgrid;
+
+type
+  TFrmCariSupplier = class(TForm)
+    TBNamaSupplier: TwwDBGrid;
+    btnAmbilNamaSupp: TBitBtn;
+    BitBtn2: TBitBtn;
+    NamaSuppDataSource: TDataSource;
+    NamaSuppQuery: TFDQuery;
+    inputNamaSupplier: TEdit;
+    Label1: TLabel;
+    btnSearchSupp: TBitBtn;
+    procedure FormShow(Sender: TObject);
+    procedure btnSearchSuppClick(Sender: TObject);
+    procedure inputNamaSupplierChange(Sender: TObject);
+    procedure btnAmbilNamaSuppClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmCariSupplier: TFrmCariSupplier;
+  CallerFindSupplier : String;
+
+implementation
+
+uses DataModule, Main, RegistrasiPembelian, EntryPembelian;
+
+{$R *.dfm}
+
+procedure TFrmCariSupplier.btnSearchSuppClick(Sender: TObject);
+var
+    Cari: String;
+begin
+    Cari:='%'+inputNamaSupplier.Text+'%';
+    With NamaSuppQuery do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Add('Select Kode_Sup, Nama_Sup, Alamat, Kota, Telp, Contact_Person');
+      SQL.Add('from Supplier');
+      if inputNamaSupplier.Text <> '' then
+      SQL.Add('Where Nama_Sup like '+QuotedStr(Cari));
+      SQL.Add('Order By Nama_Sup');
+      Open;
+      if RecordCount > 0 then
+      begin
+        btnAmbilNamaSupp.Enabled:=True;
+      end
+      else btnAmbilNamaSupp.Enabled:=False;
+    end;
+    
+end;
+
+procedure TFrmCariSupplier.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+    NamaSuppQuery.Close;
+end;
+
+procedure TFrmCariSupplier.FormShow(Sender: TObject);
+begin
+    inputNamaSupplier.Text:='';
+    With NamaSuppQuery do
+    begin
+      Close;
+
+      SQL.Clear;
+      SQL.Add('select Kode_Sup, Nama_Sup, Alamat, Kota, Telp, Contact_Person');
+      SQL.Add('from Supplier');
+      SQL.Add('order by Nama_Sup');
+      Open;
+
+      if RecordCount > 0 then
+      begin
+        btnAmbilNamaSupp.Enabled:=True;
+      end
+      else btnAmbilNamaSupp.Enabled:=False;
+    end;
+    inputNamaSupplier.SetFocus;
+end;
+
+procedure TFrmCariSupplier.inputNamaSupplierChange(Sender: TObject);
+begin
+    btnSearchSupp.Click;
+end;
+
+procedure TFrmCariSupplier.btnAmbilNamaSuppClick(Sender: TObject);
+begin
+    if CallerFindSupplier = 'Entry Pembelian' then
+
+          FrmEntryPembelian.EditKodeSup.Text:=NamaSuppQuery.Fieldbyname('Kode_Sup').asstring;
+          FrmEntryPembelian.EditNamaSup.Text:=NamaSuppQuery.Fieldbyname('Nama_Sup').asstring;
+
+    else if CallerFindSupplier = 'Registrasi Pembelian' then
+        FrmRegistrasiPembelian.inputKodeSupplier.Text:=NamaSuppQuery.Fieldbyname('Kode_Sup').asstring
+
+    else
+    FrmRegistrasiPembelian.inputKodeSupplier.Text:=NamaSuppQuery.Fieldbyname('Kode_Sup').asstring;
+    Close;
+end;
+
+end.

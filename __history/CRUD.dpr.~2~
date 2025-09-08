@@ -1,0 +1,18 @@
+program CRUD;
+
+uses
+  Vcl.Forms,
+  Main in 'Main.pas' {Form1},
+  DataModule in 'DataModule.pas' {DM: TDataModule},
+  MasterCustomer in 'MasterCustomer.pas' {FrmMasterCustomer};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TDM, DM);
+  Application.CreateForm(TFrmMasterCustomer, FrmMasterCustomer);
+  Application.Run;
+end.
