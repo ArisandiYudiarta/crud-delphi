@@ -1,0 +1,65 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 85
+  ClientWidth = 516
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object LblAsk: TRxLabel
+    Left = 8
+    Top = 8
+    Width = 229
+    Height = 13
+    Caption = 'Barang Sudah Masuk dengan Jumlah...,'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object ButtonGanti: TSpeedButton
+    Left = 8
+    Top = 32
+    Width = 113
+    Height = 33
+    Cursor = crHandPoint
+    Caption = 'Ganti'
+    OnClick = ButtonGantiClick
+  end
+  object ButtonTambah: TSpeedButton
+    Left = 136
+    Top = 32
+    Width = 113
+    Height = 33
+    Cursor = crHandPoint
+    Caption = 'Tambah'
+    OnClick = ButtonTambahClick
+  end
+  object ButtonBatal: TSpeedButton
+    Left = 376
+    Top = 32
+    Width = 113
+    Height = 33
+    Cursor = crHandPoint
+    Caption = 'Batal'
+  end
+  object ButtonBaru: TSpeedButton
+    Left = 256
+    Top = 32
+    Width = 113
+    Height = 33
+    Cursor = crHandPoint
+    Caption = 'Baru'
+    OnClick = ButtonBaruClick
+  end
+end

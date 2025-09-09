@@ -9,7 +9,8 @@ uses
   RegistrasiPembelian in 'RegistrasiPembelian.pas' {FrmRegistrasiPembelian},
   CariSupplier in 'CariSupplier.pas' {FrmCariSupplier},
   EntryPembelian in 'EntryPembelian.pas' {FrmEntryPembelian},
-  CariBarang in 'CariBarang.pas' {FrmCariBarang};
+  CariBarang in 'CariBarang.pas' {FrmCariBarang},
+  Tanya in 'Tanya.pas' {FrmTanya};
 
 {$R *.res}
 
@@ -24,5 +25,6 @@ begin
   Application.CreateForm(TFrmCariSupplier, FrmCariSupplier);
   Application.CreateForm(TFrmEntryPembelian, FrmEntryPembelian);
   Application.CreateForm(TFrmCariBarang, FrmCariBarang);
+  Application.CreateForm(TFrmTanya, FrmTanya);
   Application.Run;
 end.

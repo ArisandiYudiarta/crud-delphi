@@ -40,6 +40,7 @@ type
     procedure btnCariClick(Sender: TObject);
     procedure btnEntryClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -68,7 +69,13 @@ end;
 procedure TFrmRegistrasiPembelian.btnEntryClick(Sender: TObject);
 begin
     QueryTransaksiPembelian.Close;
-    FrmEntryPembelian.ShowModal;
+
+    with TFrmEntryPembelian.Create(Application) do
+      try
+        ShowModal;
+      finally
+        Free;
+  end;
 end;
 
 procedure TFrmRegistrasiPembelian.btnTampilClick(Sender: TObject);
@@ -99,6 +106,19 @@ begin
 
       Open;
     end;
+end;
+
+procedure TFrmRegistrasiPembelian.FormShow(Sender: TObject);
+begin
+    With QueryTransaksiPembelian do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Add('SELECT A.*, B.Nama_Sup');
+        SQL.Add('FROM Pembelian A inner join Supplier B');
+        SQL.Add('on A.Kode_Sup = B.Kode_Sup');
+        Open;
+      end;
 end;
 
 end.

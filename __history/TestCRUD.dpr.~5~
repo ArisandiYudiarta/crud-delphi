@@ -1,0 +1,28 @@
+program TestCRUD;
+
+uses
+  Vcl.Forms,
+  Main in 'Main.pas' {FrmMain},
+  DataModule in 'DataModule.pas' {DM: TDataModule},
+  MasterCustomer in 'MasterCustomer.pas' {FrmMasterCustomer},
+  MasterSupplier in 'MasterSupplier.pas' {FrmMasterSupplier},
+  RegistrasiPembelian in 'RegistrasiPembelian.pas' {FrmRegistrasiPembelian},
+  CariSupplier in 'CariSupplier.pas' {FrmCariSupplier},
+  EntryPembelian in 'EntryPembelian.pas' {FrmEntryPembelian},
+  CariBarang in 'CariBarang.pas' {FrmCariBarang};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TFrmMain, FrmMain);
+  Application.CreateForm(TDM, DM);
+  Application.CreateForm(TFrmMasterCustomer, FrmMasterCustomer);
+  Application.CreateForm(TFrmMasterSupplier, FrmMasterSupplier);
+  Application.CreateForm(TFrmRegistrasiPembelian, FrmRegistrasiPembelian);
+  Application.CreateForm(TFrmCariSupplier, FrmCariSupplier);
+  Application.CreateForm(TFrmEntryPembelian, FrmEntryPembelian);
+  Application.CreateForm(TFrmCariBarang, FrmCariBarang);
+  Application.Run;
+end.

@@ -11,6 +11,7 @@ object FrmEntryPembelian: TFrmEntryPembelian
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -193,17 +194,14 @@ object FrmEntryPembelian: TFrmEntryPembelian
     Width = 881
     Height = 353
     Selected.Strings = (
-      'Total'#9'11'#9'Total'
-      'Adjustment'#9'10'#9'Adjustment'
-      'Disc'#9'10'#9'Disc'
-      'Jangka_Waktu'#9'10'#9'Jangka_Waktu'
-      'Kode_Sup'#9'6'#9'Kode_Sup'
-      'No_Nota'#9'10'#9'No_Nota'
-      'No_Nota_Supplier'#9'15'#9'No_Nota_Supplier'
-      'Penerima'#9'30'#9'Penerima'
-      'PPN'#9'10'#9'PPN'
-      'Tgl_Nota'#9'34'#9'Tgl_Nota'
-      'UserName'#9'25'#9'UserName')
+      'No_Nota'#9'10'#9'No_Nota'#9#9
+      'No_Urut'#9'10'#9'No_Urut'#9#9
+      'Kode_Brg'#9'15'#9'Kode_Brg'#9#9
+      'Satuan'#9'10'#9'Satuan'#9#9
+      'Nama_Brg'#9'50'#9'Nama_Brg'#9#9
+      'Qty_Gudang'#9'10'#9'Qty_Gudang'#9#9
+      'Harga_Beli'#9'10'#9'Harga_Beli'#9#9
+      'UserName'#9'25'#9'UserName'#9#9)
     IniAttributes.Delimiter = ';;'
     IniAttributes.UnicodeIniFile = False
     TitleColor = clBtnFace
@@ -241,9 +239,27 @@ object FrmEntryPembelian: TFrmEntryPembelian
       Height = 33
       Cursor = crHandPoint
       Caption = 'SAVE'
-      Kind = bkOK
+      Default = True
+      Glyph.Data = {
+        DE010000424DDE01000000000000760000002800000024000000120000000100
+        0400000000006801000000000000000000001000000000000000000000000000
+        80000080000000808000800000008000800080800000C0C0C000808080000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+        3333333333333333333333330000333333333333333333333333F33333333333
+        00003333344333333333333333388F3333333333000033334224333333333333
+        338338F3333333330000333422224333333333333833338F3333333300003342
+        222224333333333383333338F3333333000034222A22224333333338F338F333
+        8F33333300003222A3A2224333333338F3838F338F33333300003A2A333A2224
+        33333338F83338F338F33333000033A33333A222433333338333338F338F3333
+        0000333333333A222433333333333338F338F33300003333333333A222433333
+        333333338F338F33000033333333333A222433333333333338F338F300003333
+        33333333A222433333333333338F338F00003333333333333A22433333333333
+        3338F38F000033333333333333A223333333333333338F830000333333333333
+        333A333333333333333338330000333333333333333333333333333333333333
+        0000}
       NumGlyphs = 2
       TabOrder = 0
+      OnClick = ButtonSaveClick
     end
     object ButtonCancel: TBitBtn
       Left = 112
@@ -273,7 +289,7 @@ object FrmEntryPembelian: TFrmEntryPembelian
     TabOrder = 3
     object GrandTotal: TCurrencyEdit
       Left = 16
-      Top = 16
+      Top = 21
       Width = 153
       Height = 33
       AutoSize = False
@@ -388,11 +404,11 @@ object FrmEntryPembelian: TFrmEntryPembelian
       Caption = 'Disc 3'
     end
     object Label22: TLabel
-      Left = 3
-      Top = 203
-      Width = 66
+      Left = 11
+      Top = 205
+      Width = 87
       Height = 13
-      Caption = 'Satuan Bonus'
+      Caption = 'Qty Satuan Bonus'
     end
     object Label15: TLabel
       Left = 9
@@ -430,29 +446,6 @@ object FrmEntryPembelian: TFrmEntryPembelian
       Width = 7
       Height = 13
       Caption = 'G'
-    end
-    object LabelGH: TLabel
-      Left = 192
-      Top = 200
-      Width = 7
-      Height = 13
-      Caption = 'G'
-    end
-    object LabelTH: TLabel
-      Left = 264
-      Top = 200
-      Width = 6
-      Height = 13
-      Caption = 'T'
-      Visible = False
-    end
-    object LabelHH: TLabel
-      Left = 336
-      Top = 200
-      Width = 7
-      Height = 13
-      Caption = 'H'
-      Visible = False
     end
     object ButtonBlank: TSpeedButton
       Left = 400
@@ -556,7 +549,7 @@ object FrmEntryPembelian: TFrmEntryPembelian
       AutoSize = False
       DisplayFormat = '###,###,##0.##'
       ReadOnly = True
-      TabOrder = 14
+      TabOrder = 10
     end
     object ButtonOK: TBitBtn
       Left = 408
@@ -583,7 +576,8 @@ object FrmEntryPembelian: TFrmEntryPembelian
         333A333333333333333338330000333333333333333333333333333333333333
         0000}
       NumGlyphs = 2
-      TabOrder = 13
+      TabOrder = 9
+      OnClick = ButtonOKClick
     end
     object EditDisc3: TCurrencyEdit
       Left = 400
@@ -596,23 +590,6 @@ object FrmEntryPembelian: TFrmEntryPembelian
       TabOrder = 7
       OnChange = EditDisc3Change
       OnExit = EditDisc3Change
-    end
-    object EditSatuanBonus: TwwDBComboBox
-      Left = 105
-      Top = 203
-      Width = 81
-      Height = 21
-      ShowButton = True
-      Style = csDropDown
-      MapList = False
-      AllowClearKey = False
-      ShowMatchText = True
-      CharCase = ecUpperCase
-      DropDownCount = 8
-      ItemHeight = 0
-      Sorted = False
-      TabOrder = 9
-      UnboundDataType = wwDefault
     end
     object EditQtyToko: TCurrencyEdit
       Left = 184
@@ -634,35 +611,6 @@ object FrmEntryPembelian: TFrmEntryPembelian
       TabOrder = 2
       Visible = False
     end
-    object EditDiscQtyGudang: TCurrencyEdit
-      Left = 205
-      Top = 203
-      Width = 49
-      Height = 21
-      AutoSize = False
-      DisplayFormat = '###,###,##0.##'
-      TabOrder = 10
-    end
-    object EditDiscQtyToko: TCurrencyEdit
-      Left = 276
-      Top = 203
-      Width = 49
-      Height = 21
-      AutoSize = False
-      DisplayFormat = '###,###,##0.##'
-      TabOrder = 11
-      Visible = False
-    end
-    object EditDiscQtyHadiah: TCurrencyEdit
-      Left = 352
-      Top = 200
-      Width = 49
-      Height = 21
-      AutoSize = False
-      DisplayFormat = '###,###,##0.##'
-      TabOrder = 12
-      Visible = False
-    end
     object EditHrgBeliLama: TCurrencyEdit
       Left = 408
       Top = 136
@@ -672,7 +620,7 @@ object FrmEntryPembelian: TFrmEntryPembelian
       AutoSize = False
       DisplayFormat = '###,###,##0.00'
       ReadOnly = True
-      TabOrder = 15
+      TabOrder = 11
     end
     object editKodeBarang: TEdit
       Left = 104
@@ -680,7 +628,7 @@ object FrmEntryPembelian: TFrmEntryPembelian
       Width = 121
       Height = 21
       ReadOnly = True
-      TabOrder = 16
+      TabOrder = 12
     end
     object editSatuan: TwwDBLookupCombo
       Left = 105
@@ -690,13 +638,25 @@ object FrmEntryPembelian: TFrmEntryPembelian
       DropDownAlignment = taLeftJustify
       LookupTable = SatBarangQuery
       LookupField = 'Satuan'
-      TabOrder = 17
+      TabOrder = 13
       AutoDropDown = False
       ShowButton = True
       PreciseEditRegion = False
       AllowClearKey = False
       OnChange = editSatuanChange
       OnCloseUp = editSatuanCloseUp
+    end
+    object editSatuanBonus: TCurrencyEdit
+      Left = 104
+      Top = 203
+      Width = 65
+      Height = 21
+      AutoSize = False
+      DecimalPlaces = 4
+      DisplayFormat = '###,###,##0.####'
+      TabOrder = 14
+      OnChange = EditDisc1Change
+      OnExit = EditDisc1Change
     end
   end
   object Panel1: TPanel
@@ -750,7 +710,7 @@ object FrmEntryPembelian: TFrmEntryPembelian
       ParentFont = False
       ReadOnly = True
       TabOrder = 0
-      Value = 999999999.000000000000000000
+      OnChange = TotalPembelianChange
     end
     object EditTotalPPN: TCurrencyEdit
       Left = 192
@@ -812,15 +772,14 @@ object FrmEntryPembelian: TFrmEntryPembelian
   end
   object EditDiscGlobal: TCurrencyEdit
     Left = 104
-    Top = 128
+    Top = 130
     Width = 73
     Height = 21
     AutoSize = False
     DecimalPlaces = 4
     DisplayFormat = '###,###,##0.####'
     TabOrder = 9
-    OnChange = EditDiscGlobalChange
-    OnExit = EditDiscGlobalChange
+    OnChange = TotalPembelianChange
   end
   object EditPPN: TCurrencyEdit
     Left = 104
@@ -830,6 +789,7 @@ object FrmEntryPembelian: TFrmEntryPembelian
     AutoSize = False
     DisplayFormat = '###,##0.##'
     TabOrder = 10
+    OnChange = TotalPembelianChange
   end
   object EditTempo: TCurrencyEdit
     Left = 104
@@ -873,25 +833,6 @@ object FrmEntryPembelian: TFrmEntryPembelian
     ReadOnly = True
     TabOrder = 15
   end
-  object wwDBLookupCombo1: TwwDBLookupCombo
-    Left = 104
-    Top = 104
-    Width = 177
-    Height = 21
-    TabStop = False
-    CharCase = ecUpperCase
-    DropDownAlignment = taLeftJustify
-    LookupTable = QuerySupplier
-    LookupField = 'Nama_Sup'
-    TabOrder = 16
-    AutoDropDown = False
-    ShowButton = True
-    PreciseEditRegion = False
-    AllowClearKey = False
-    ShowMatchText = True
-    OnDropDown = EditNamaSupplierDropDown
-    OnCloseUp = EditNamaSupplierCloseUp
-  end
   object BarangDataSource: TDataSource
     DataSet = BarangQuery
     Left = 752
@@ -923,8 +864,8 @@ object FrmEntryPembelian: TFrmEntryPembelian
   end
   object DataSourcePembelian: TDataSource
     DataSet = QueryPembelian
-    Left = 744
-    Top = 256
+    Left = 728
+    Top = 384
   end
   object QueryPembelian: TFDQuery
     Connection = DM.FDConnection
@@ -932,7 +873,7 @@ object FrmEntryPembelian: TFrmEntryPembelian
       'select * '
       'from Pembelian')
     Left = 808
-    Top = 256
+    Top = 376
   end
   object QuerySupplier: TFDQuery
     Connection = DM.FDConnection
@@ -950,12 +891,235 @@ object FrmEntryPembelian: TFrmEntryPembelian
   end
   object DataSourceDetPembelian: TDataSource
     DataSet = QueryDetPembelian
-    Left = 72
-    Top = 297
+    Left = 408
+    Top = 321
   end
   object QueryDetPembelian: TFDQuery
-    Left = 184
-    Top = 296
+    OnCalcFields = QueryDetPembelianCalcFields
+    CachedUpdates = True
+    Connection = DM.FDConnection
+    SQL.Strings = (
+      'Select * From DetPembelian')
+    Left = 512
+    Top = 320
+    object QueryDetPembelianNo_Nota: TStringField
+      DisplayWidth = 10
+      FieldName = 'No_Nota'
+      Origin = 'No_Nota'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      FixedChar = True
+      Size = 10
+    end
+    object QueryDetPembelianNo_Urut: TIntegerField
+      DisplayWidth = 10
+      FieldName = 'No_Urut'
+      Origin = 'No_Urut'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object QueryDetPembelianKode_Brg: TStringField
+      DisplayWidth = 15
+      FieldName = 'Kode_Brg'
+      Origin = 'Kode_Brg'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      FixedChar = True
+      Size = 15
+    end
+    object QueryDetPembelianSatuan: TStringField
+      DisplayWidth = 10
+      FieldName = 'Satuan'
+      Origin = 'Satuan'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      FixedChar = True
+      Size = 10
+    end
+    object QueryDetPembelianNama_Brg: TStringField
+      DisplayWidth = 50
+      FieldName = 'Nama_Brg'
+      Origin = 'Nama_Brg'
+      FixedChar = True
+      Size = 50
+    end
+    object QueryDetPembelianQty_Gudang: TFloatField
+      DisplayWidth = 10
+      FieldName = 'Qty_Gudang'
+      Origin = 'Qty_Gudang'
+      Required = True
+    end
+    object QueryDetPembelianHarga_Beli: TFloatField
+      DisplayWidth = 10
+      FieldName = 'Harga_Beli'
+      Origin = 'Harga_Beli'
+      Required = True
+    end
+    object QueryDetPembelianUserName: TStringField
+      DisplayWidth = 25
+      FieldName = 'UserName'
+      Origin = 'UserName'
+      FixedChar = True
+      Size = 25
+    end
+    object QueryDetPembelianQty_Satuan: TFloatField
+      FieldName = 'Qty_Satuan'
+      Origin = 'Qty_Satuan'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianQty_Toko: TFloatField
+      FieldName = 'Qty_Toko'
+      Origin = 'Qty_Toko'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianQty_Hadiah: TFloatField
+      FieldName = 'Qty_Hadiah'
+      Origin = 'Qty_Hadiah'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianQty: TFloatField
+      FieldName = 'Qty'
+      Origin = 'Qty'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianDisc1: TFloatField
+      FieldName = 'Disc1'
+      Origin = 'Disc1'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianDisc2: TFloatField
+      FieldName = 'Disc2'
+      Origin = 'Disc2'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianDisc3: TFloatField
+      FieldName = 'Disc3'
+      Origin = 'Disc3'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianDisc4: TFloatField
+      FieldName = 'Disc4'
+      Origin = 'Disc4'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianDisc5: TFloatField
+      FieldName = 'Disc5'
+      Origin = 'Disc5'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianTotal_Disc1: TFloatField
+      FieldName = 'Total_Disc1'
+      Origin = 'Total_Disc1'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianTotal_Disc2: TFloatField
+      FieldName = 'Total_Disc2'
+      Origin = 'Total_Disc2'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianTotal_Disc3: TFloatField
+      FieldName = 'Total_Disc3'
+      Origin = 'Total_Disc3'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianTotal_Disc4: TFloatField
+      FieldName = 'Total_Disc4'
+      Origin = 'Total_Disc4'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianTotal_Disc5: TFloatField
+      FieldName = 'Total_Disc5'
+      Origin = 'Total_Disc5'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianTotal_PPN: TFloatField
+      FieldName = 'Total_PPN'
+      Origin = 'Total_PPN'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianTotal_Disc_Cash: TFloatField
+      FieldName = 'Total_Disc_Cash'
+      Origin = 'Total_Disc_Cash'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianProfit: TFloatField
+      FieldName = 'Profit'
+      Origin = 'Profit'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianHarga_Jual: TFloatField
+      FieldName = 'Harga_Jual'
+      Origin = 'Harga_Jual'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianDisc_Qty_Gudang: TFloatField
+      FieldName = 'Disc_Qty_Gudang'
+      Origin = 'Disc_Qty_Gudang'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianDisc_Qty_Toko: TFloatField
+      FieldName = 'Disc_Qty_Toko'
+      Origin = 'Disc_Qty_Toko'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianDisc_Qty_Hadiah: TFloatField
+      FieldName = 'Disc_Qty_Hadiah'
+      Origin = 'Disc_Qty_Hadiah'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianQty_Satuan_Bonus: TFloatField
+      FieldName = 'Qty_Satuan_Bonus'
+      Origin = 'Qty_Satuan_Bonus'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianSatuan_Bonus: TStringField
+      FieldName = 'Satuan_Bonus'
+      Origin = 'Satuan_Bonus'
+      Visible = False
+      FixedChar = True
+      Size = 10
+    end
+    object QueryDetPembelianQty_Bonus: TFloatField
+      FieldName = 'Qty_Bonus'
+      Origin = 'Qty_Bonus'
+      Required = True
+      Visible = False
+    end
+    object QueryDetPembelianKode_Paket: TStringField
+      FieldName = 'Kode_Paket'
+      Origin = 'Kode_Paket'
+      Visible = False
+      FixedChar = True
+      Size = 5
+    end
+    object QueryDetPembelianTotal: TFloatField
+      FieldKind = fkCalculated
+      FieldName = 'Total'
+      Visible = False
+      Calculated = True
+    end
   end
   object QueryNomerNota: TFDQuery
     Connection = DM.FDConnection
