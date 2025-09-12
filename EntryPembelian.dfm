@@ -12,6 +12,7 @@ object FrmEntryPembelian: TFrmEntryPembelian
   Font.Style = []
   OldCreateOrder = False
   OnClose = FormClose
+  OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -173,26 +174,11 @@ object FrmEntryPembelian: TFrmEntryPembelian
     Caption = 'Nama Penerima'
     Visible = False
   end
-  object EditTgl: TwwDBDateTimePicker
-    Left = 104
-    Top = 56
-    Width = 121
-    Height = 21
-    CalendarAttributes.Font.Charset = DEFAULT_CHARSET
-    CalendarAttributes.Font.Color = clWindowText
-    CalendarAttributes.Font.Height = -11
-    CalendarAttributes.Font.Name = 'MS Sans Serif'
-    CalendarAttributes.Font.Style = []
-    Epoch = 1950
-    ShowButton = True
-    TabOrder = 0
-    DisplayFormat = 'dd-mmm-yyyy'
-  end
   object DBGridDetPembelian: TwwDBGrid
     Left = 6
-    Top = 255
+    Top = 247
     Width = 881
-    Height = 353
+    Height = 361
     Selected.Strings = (
       'No_Nota'#9'10'#9'No_Nota'#9#9
       'No_Urut'#9'10'#9'No_Urut'#9#9
@@ -225,6 +211,22 @@ object FrmEntryPembelian: TFrmEntryPembelian
     TitleFont.Style = []
     TitleLines = 1
     TitleButtons = False
+    OnDblClick = DBGridDetPembelianDblClick
+  end
+  object EditTgl: TwwDBDateTimePicker
+    Left = 104
+    Top = 56
+    Width = 121
+    Height = 21
+    CalendarAttributes.Font.Charset = DEFAULT_CHARSET
+    CalendarAttributes.Font.Color = clWindowText
+    CalendarAttributes.Font.Height = -11
+    CalendarAttributes.Font.Name = 'MS Sans Serif'
+    CalendarAttributes.Font.Style = []
+    Epoch = 1950
+    ShowButton = True
+    TabOrder = 0
+    DisplayFormat = 'dd-mmm-yyyy'
   end
   object PanelButton: TPanel
     Left = 672
@@ -267,7 +269,6 @@ object FrmEntryPembelian: TFrmEntryPembelian
       Width = 90
       Height = 33
       Cursor = crHandPoint
-      Caption = 'CANCEL'
       Kind = bkCancel
       NumGlyphs = 2
       TabOrder = 1
@@ -304,9 +305,9 @@ object FrmEntryPembelian: TFrmEntryPembelian
     end
   end
   object GroupBoxEntry: TGroupBox
-    Left = 352
+    Left = 392
     Top = 8
-    Width = 497
+    Width = 495
     Height = 233
     Caption = 'Entry Barang'
     TabOrder = 4
@@ -754,21 +755,13 @@ object FrmEntryPembelian: TFrmEntryPembelian
     DisplayFormat = '###,###,##0.##'
     TabOrder = 6
   end
-  object editNoPembelian: TEdit
-    Left = 104
-    Top = 8
-    Width = 105
-    Height = 21
-    ReadOnly = True
-    TabOrder = 7
-  end
   object EditNoNota: TEdit
     Left = 104
     Top = 32
     Width = 105
     Height = 21
     CharCase = ecUpperCase
-    TabOrder = 8
+    TabOrder = 7
   end
   object EditDiscGlobal: TCurrencyEdit
     Left = 104
@@ -778,7 +771,7 @@ object FrmEntryPembelian: TFrmEntryPembelian
     AutoSize = False
     DecimalPlaces = 4
     DisplayFormat = '###,###,##0.####'
-    TabOrder = 9
+    TabOrder = 8
     OnChange = TotalPembelianChange
   end
   object EditPPN: TCurrencyEdit
@@ -788,7 +781,7 @@ object FrmEntryPembelian: TFrmEntryPembelian
     Height = 21
     AutoSize = False
     DisplayFormat = '###,##0.##'
-    TabOrder = 10
+    TabOrder = 9
     OnChange = TotalPembelianChange
   end
   object EditTempo: TCurrencyEdit
@@ -798,7 +791,7 @@ object FrmEntryPembelian: TFrmEntryPembelian
     Height = 21
     AutoSize = False
     DisplayFormat = '###,##0'
-    TabOrder = 11
+    TabOrder = 10
   end
   object EditPenerima: TEdit
     Left = 104
@@ -806,16 +799,16 @@ object FrmEntryPembelian: TFrmEntryPembelian
     Width = 177
     Height = 21
     CharCase = ecUpperCase
-    TabOrder = 12
+    TabOrder = 11
     Visible = False
   end
   object editNamaBarang: TEdit
-    Left = 457
+    Left = 497
     Top = 48
-    Width = 256
+    Width = 208
     Height = 21
     ReadOnly = True
-    TabOrder = 13
+    TabOrder = 12
   end
   object editKodeSupplier: TEdit
     Left = 104
@@ -823,7 +816,7 @@ object FrmEntryPembelian: TFrmEntryPembelian
     Width = 121
     Height = 21
     ReadOnly = True
-    TabOrder = 14
+    TabOrder = 13
   end
   object editNamaSupplier: TEdit
     Left = 104
@@ -831,20 +824,27 @@ object FrmEntryPembelian: TFrmEntryPembelian
     Width = 177
     Height = 21
     ReadOnly = True
+    TabOrder = 14
+  end
+  object editNoPembelian: TEdit
+    Left = 104
+    Top = 8
+    Width = 105
+    Height = 21
     TabOrder = 15
   end
   object BarangDataSource: TDataSource
     DataSet = BarangQuery
-    Left = 752
-    Top = 512
+    Left = 584
+    Top = 352
   end
   object BarangQuery: TFDQuery
     Connection = DM.FDConnection
     SQL.Strings = (
       'select *'
       'from Barang')
-    Left = 824
-    Top = 512
+    Left = 584
+    Top = 288
   end
   object SatBarangQuery: TFDQuery
     Connection = DM.FDConnection
@@ -853,7 +853,7 @@ object FrmEntryPembelian: TFrmEntryPembelian
       'FROM SatBarang'
       'WHERE Kode_Brg = :KodeBrg'
       'ORDER BY Satuan')
-    Left = 584
+    Left = 632
     Top = 72
     ParamData = <
       item
@@ -864,16 +864,65 @@ object FrmEntryPembelian: TFrmEntryPembelian
   end
   object DataSourcePembelian: TDataSource
     DataSet = QueryPembelian
-    Left = 728
-    Top = 384
+    Left = 280
+    Top = 360
   end
   object QueryPembelian: TFDQuery
+    CachedUpdates = True
     Connection = DM.FDConnection
     SQL.Strings = (
       'select * '
       'from Pembelian')
-    Left = 808
-    Top = 376
+    Left = 400
+    Top = 360
+    object QueryPembelianNo_Nota: TStringField
+      FieldName = 'No_Nota'
+      Required = True
+      FixedChar = True
+      Size = 10
+    end
+    object QueryPembelianTgl_Nota: TSQLTimeStampField
+      FieldName = 'Tgl_Nota'
+    end
+    object QueryPembelianNo_Nota_Supplier: TStringField
+      FieldName = 'No_Nota_Supplier'
+      FixedChar = True
+      Size = 15
+    end
+    object QueryPembelianKode_Sup: TStringField
+      FieldName = 'Kode_Sup'
+      FixedChar = True
+      Size = 6
+    end
+    object QueryPembelianDisc: TFloatField
+      FieldName = 'Disc'
+      Required = True
+    end
+    object QueryPembelianPPN: TFloatField
+      FieldName = 'PPN'
+      Required = True
+    end
+    object QueryPembelianJangka_Waktu: TIntegerField
+      FieldName = 'Jangka_Waktu'
+      Required = True
+    end
+    object QueryPembelianTotal: TFloatField
+      FieldName = 'Total'
+      Required = True
+    end
+    object QueryPembelianAdjustment: TFloatField
+      FieldName = 'Adjustment'
+    end
+    object QueryPembelianUserName: TStringField
+      FieldName = 'UserName'
+      FixedChar = True
+      Size = 25
+    end
+    object QueryPembelianPenerima: TStringField
+      FieldName = 'Penerima'
+      FixedChar = True
+      Size = 30
+    end
   end
   object QuerySupplier: TFDQuery
     Connection = DM.FDConnection
@@ -891,8 +940,8 @@ object FrmEntryPembelian: TFrmEntryPembelian
   end
   object DataSourceDetPembelian: TDataSource
     DataSet = QueryDetPembelian
-    Left = 408
-    Top = 321
+    Left = 280
+    Top = 281
   end
   object QueryDetPembelian: TFDQuery
     OnCalcFields = QueryDetPembelianCalcFields
@@ -900,8 +949,8 @@ object FrmEntryPembelian: TFrmEntryPembelian
     Connection = DM.FDConnection
     SQL.Strings = (
       'Select * From DetPembelian')
-    Left = 512
-    Top = 320
+    Left = 400
+    Top = 280
     object QueryDetPembelianNo_Nota: TStringField
       DisplayWidth = 10
       FieldName = 'No_Nota'

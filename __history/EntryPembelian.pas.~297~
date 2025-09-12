@@ -1,0 +1,741 @@
+unit EntryPembelian;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, vcl.Wwdbedit,
+  vcl.Wwdotdot, vcl.Wwdbcomb, Vcl.Mask, RxToolEdit, RxCurrEdit, Vcl.Buttons,
+  Vcl.ExtCtrls, Vcl.Grids, vcl.wwdbigrd, vcl.wwdbgrid, vcl.Wwdbdatetimepicker,
+  vcl.wwdblook, RxCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+
+type
+  TIsiDetailModeType = (ganti, tambah, baru, default);
+  TFrmEntryPembelian = class(TForm)
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label21: TLabel;
+    ButtonCari: TSpeedButton;
+    Tempo: TLabel;
+    Label23: TLabel;
+    Label14: TLabel;
+    LblInfo: TLabel;
+    ButtonMasterBarang: TSpeedButton;
+    Label34: TLabel;
+    RxLabel5: TRxLabel;
+    Label17: TLabel;
+    EditTgl: TwwDBDateTimePicker;
+    DBGridDetPembelian: TwwDBGrid;
+    PanelButton: TPanel;
+    ButtonSave: TBitBtn;
+    ButtonCancel: TBitBtn;
+    GroupBoxTotalPembelian: TGroupBox;
+    GrandTotal: TCurrencyEdit;
+    GroupBoxEntry: TGroupBox;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label20: TLabel;
+    ButtonFind: TSpeedButton;
+    Label26: TLabel;
+    Label22: TLabel;
+    Label15: TLabel;
+    LabelG: TLabel;
+    LabelT: TLabel;
+    LabelH: TLabel;
+    LblStockGudang: TLabel;
+    ButtonBlank: TSpeedButton;
+    Label16: TLabel;
+    EditQtyGudang: TCurrencyEdit;
+    EditHargaBeli: TCurrencyEdit;
+    EditHargaBeliTotal: TCurrencyEdit;
+    EditDisc1: TCurrencyEdit;
+    EditDisc2: TCurrencyEdit;
+    EditHargaBeliAkhir: TCurrencyEdit;
+    EditStockGudang: TCurrencyEdit;
+    ButtonOK: TBitBtn;
+    EditDisc3: TCurrencyEdit;
+    EditQtyToko: TCurrencyEdit;
+    EditQtyHadiah: TCurrencyEdit;
+    EditHrgBeliLama: TCurrencyEdit;
+    Panel1: TPanel;
+    Total: TRxLabel;
+    RxLabel1: TRxLabel;
+    RxLabel2: TRxLabel;
+    RxLabel4: TRxLabel;
+    TotalPembelian: TCurrencyEdit;
+    EditTotalPPN: TCurrencyEdit;
+    TotalDiscCash: TCurrencyEdit;
+    EditAdjustment: TCurrencyEdit;
+    EditNoNota: TEdit;
+    EditDiscGlobal: TCurrencyEdit;
+    EditPPN: TCurrencyEdit;
+    EditTempo: TCurrencyEdit;
+    EditPenerima: TEdit;
+    BarangDataSource: TDataSource;
+    BarangQuery: TFDQuery;
+    editKodeBarang: TEdit;
+    editNamaBarang: TEdit;
+    SatBarangQuery: TFDQuery;
+    editSatuan: TwwDBLookupCombo;
+    DataSourcePembelian: TDataSource;
+    QueryPembelian: TFDQuery;
+    QuerySupplier: TFDQuery;
+    DataSourceDetPembelian: TDataSource;
+    QueryDetPembelian: TFDQuery;
+    editKodeSupplier: TEdit;
+    editNamaSupplier: TEdit;
+    QueryNomerNota: TFDQuery;
+    QueryDetPembelianNo_Nota: TStringField;
+    QueryDetPembelianNo_Urut: TIntegerField;
+    QueryDetPembelianKode_Brg: TStringField;
+    QueryDetPembelianSatuan: TStringField;
+    QueryDetPembelianNama_Brg: TStringField;
+    QueryDetPembelianQty_Satuan: TFloatField;
+    QueryDetPembelianQty_Gudang: TFloatField;
+    QueryDetPembelianQty_Toko: TFloatField;
+    QueryDetPembelianQty_Hadiah: TFloatField;
+    QueryDetPembelianQty: TFloatField;
+    QueryDetPembelianHarga_Beli: TFloatField;
+    QueryDetPembelianDisc1: TFloatField;
+    QueryDetPembelianDisc2: TFloatField;
+    QueryDetPembelianDisc3: TFloatField;
+    QueryDetPembelianDisc4: TFloatField;
+    QueryDetPembelianDisc5: TFloatField;
+    QueryDetPembelianTotal_Disc1: TFloatField;
+    QueryDetPembelianTotal_Disc2: TFloatField;
+    QueryDetPembelianTotal_Disc3: TFloatField;
+    QueryDetPembelianTotal_Disc4: TFloatField;
+    QueryDetPembelianTotal_Disc5: TFloatField;
+    QueryDetPembelianTotal_PPN: TFloatField;
+    QueryDetPembelianTotal_Disc_Cash: TFloatField;
+    QueryDetPembelianProfit: TFloatField;
+    QueryDetPembelianHarga_Jual: TFloatField;
+    QueryDetPembelianDisc_Qty_Gudang: TFloatField;
+    QueryDetPembelianDisc_Qty_Toko: TFloatField;
+    QueryDetPembelianDisc_Qty_Hadiah: TFloatField;
+    QueryDetPembelianQty_Satuan_Bonus: TFloatField;
+    QueryDetPembelianSatuan_Bonus: TStringField;
+    QueryDetPembelianQty_Bonus: TFloatField;
+    QueryDetPembelianKode_Paket: TStringField;
+    QueryDetPembelianUserName: TStringField;
+    QueryDetPembelianTotal: TFloatField;
+    editSatuanBonus: TCurrencyEdit;
+    editNoPembelian: TEdit;
+    QueryPembelianNo_Nota: TStringField;
+    QueryPembelianTgl_Nota: TSQLTimeStampField;
+    QueryPembelianNo_Nota_Supplier: TStringField;
+    QueryPembelianKode_Sup: TStringField;
+    QueryPembelianDisc: TFloatField;
+    QueryPembelianPPN: TFloatField;
+    QueryPembelianJangka_Waktu: TIntegerField;
+    QueryPembelianTotal: TFloatField;
+    QueryPembelianAdjustment: TFloatField;
+    QueryPembelianUserName: TStringField;
+    QueryPembelianPenerima: TStringField;
+    procedure ButtonFindClick(Sender: TObject);
+    procedure LoadSatuanForBarang(const KodeBrg: string);
+    procedure editSatuanCloseUp(Sender: TObject; LookupTable,
+      FillTable: TDataSet; modified: Boolean);
+    procedure ButtonCariClick(Sender: TObject);
+//    procedure EditNamaSupplierCloseUp(Sender: TObject; LookupTable,
+//      FillTable: TDataSet; modified: Boolean);
+    procedure EditNamaSupplierDropDown(Sender: TObject);
+    procedure ButtonBlankClick(Sender: TObject);
+    procedure BlankEntry;
+    procedure HitungHargaBeliTotal;
+    procedure editSatuanChange(Sender: TObject);
+    procedure EditQtyGudangChange(Sender: TObject);
+    procedure EditDisc1Change(Sender: TObject);
+    procedure EditDisc2Change(Sender: TObject);
+    procedure EditDisc3Change(Sender: TObject);
+//    procedure EditDiscGlobalChange(Sender: TObject);
+    procedure Validation;
+    procedure FormShow(Sender: TObject);
+    procedure ButtonOKClick(Sender: TObject);
+    procedure TotalPembelianChange(Sender: TObject);
+    procedure HitungTotalPembelian;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure QueryDetPembelianCalcFields(DataSet: TDataSet);
+    procedure ButtonSaveClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure DBGridDetPembelianDblClick(Sender: TObject);
+//    procedure TanyaUserBarang;
+  private
+//    procedure IsiEditDetailPembelian(Q: TFDQuery);
+    procedure IsiDetailPembelian(Q: TFDQuery; Mode: TIsiDetailModeType);
+    procedure HandleSupplierSelected(const Kode, Nama: String);
+    procedure IsiPembelian(Q: TFDQuery);
+    procedure HandleBarangSelected(const Kode, Nama: string);
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+//  FrmEntryPembelian: TFrmEntryPembelian;
+
+  SatBarang: String;
+  TotalLama : Double;
+  JumlahDetail : Integer;
+  QtySatBarang : Integer;
+  MaxID : Integer;
+  IDLama : Integer;
+  Mode : String;
+  StateEdit : Boolean;
+  IDDetPembelian : Integer;
+//  Kode_Paket: String;
+
+implementation
+
+uses DataModule, CariBarang, CariSupplier, Tanya;
+
+{$R *.dfm}
+
+procedure TfrmEntryPembelian.BlankEntry;
+begin
+    EditKodeBarang.Text:='';
+    EditNamaBarang.Text:='';
+    EditQtyGudang.Text:='';
+    EditQtyToko.Text:='';
+    EditQtyHadiah.Text:='';
+//    EditDiscQtyGudang.Text:='';
+//    EditDiscQtyToko.Text:='';
+//    EditDiscQtyHadiah.Text:='';
+    EditSatuan.Text:='';
+    EditHargaBeli.Text:='';
+    EditHargaBeliTotal.Text:='';
+    EditDisc1.Text:='';
+    EditDisc2.Text:='';
+    EditDisc3.Text:='';
+    EditStockGudang.Text:='';
+//    editStockToko.Text:='';
+//    EditStockHadiah.Text:='';
+    EditHargaBeliAkhir.Text:='';
+//    EditDiscQtyGudang.Text:='';
+//    EditDiscQtyToko.Text:='';
+//    EditDiscQtyHadiah.Text:='';
+    EditSatuanBonus.Text:='';
+    EditAdjustment.Text:='';
+    EditHrgBeliLama.Text:='';
+    StateEdit:=False;
+end;
+
+procedure TFrmEntryPembelian.ButtonBlankClick(Sender: TObject);
+begin
+    BlankEntry;
+    editKodeBarang.SetFocus;
+end;
+
+
+
+//button cari supplier di clik
+procedure TFrmEntryPembelian.ButtonCariClick(Sender: TObject);
+begin
+  FrmCariSupplier.OnSupplierSelected := HandleSupplierSelected;
+  FrmCariSupplier.ShowModal;
+end;
+//habis di klik data yang diambil di handle sama function ini
+procedure TFrmEntryPembelian.HandleSupplierSelected(const Kode, Nama: string);
+begin
+  editKodeSupplier.Text := Kode;
+  editNamaSupplier.Text := Nama;
+end;
+
+
+// button cari barang di klik
+procedure TFrmEntryPembelian.ButtonFindClick(Sender: TObject);
+begin
+
+  if FrmCariBarang.ShowModal = mrOk then
+  begin
+
+    editKodeBarang.Text := FrmCariBarang.SelectedKode;
+    editNamaBarang.Text := FrmCariBarang.SelectedNama;
+
+    LoadSatuanForBarang(FrmCariBarang.SelectedKode);
+  end;
+end;
+//function yang handle hasil dari fetch data saat btn cari barang di klik
+procedure TFrmEntryPembelian.HandleBarangSelected(const Kode, Nama: string);
+begin
+  editKodeBarang.Text := Kode;
+  editNamaBarang.Text := Nama;
+
+  LoadSatuanForBarang(Kode);
+end;
+
+
+procedure TFrmEntryPembelian.EditDisc1Change(Sender: TObject);
+begin
+    HitungHargaBeliTotal;
+end;
+
+procedure TFrmEntryPembelian.EditDisc2Change(Sender: TObject);
+begin
+    HitungHargaBeliTotal;
+end;
+
+procedure TFrmEntryPembelian.EditDisc3Change(Sender: TObject);
+begin
+    HitungHargaBeliTotal;
+end;
+
+procedure TfrmEntryPembelian.HitungHargaBeliTotal;
+var
+    disc1, disc2, disc3, DiscCash: Double;
+begin
+    EditHargaBeliTotal.Value := editQtyGudang.Value * EditHargaBeli.Value;
+    if editQtyGudang.Value <> 0 then
+    begin
+        if EditDisc1.Value < 1 then
+        disc1:=EditHargaBeli.Value*editQtyGudang.Value*EditDisc1.Value
+        else disc1:=EditDisc1.Value*editQtyGudang.Value;
+
+        if EditDisc2.Value < 1 then
+        disc2:=(EditHargaBeli.Value*editQtyGudang.Value - disc1)*EditDisc2.Value
+        else disc2:=EditDisc2.Value*editQtyGudang.Value;
+
+        if EditDisc3.Value < 1 then
+        disc3:=(EditHargaBeli.Value*editQtyGudang.Value - disc1 - disc2)*EditDisc3.Value
+        else disc3:=EditDisc3.Value*editQtyGudang.Value;
+
+        if EditDiscGlobal.Value < 1 then
+        DiscCash:=(EditHargaBeli.Value*EditQtyGudang.Value - disc1 - disc2 - Disc3)*EditDiscGlobal.Value
+        else DiscCash:=0;
+
+        if EditQtyGudang.Value <> 0 then
+        EditHargaBeliAkhir.Value := ((EditHargaBeliTotal.Value - disc1 - disc2 - disc3 - DiscCash) + (EditHargaBeliTotal.Value - disc1 - disc2 - disc3 - DiscCash)*EditPPN.Value/100)/ EditQtyGudang.Value;
+    end
+    else EditHargaBeliAkhir.Value:=0;
+
+end;
+
+procedure TFrmEntryPembelian.EditNamaSupplierDropDown(Sender: TObject);
+begin
+  if not QuerySupplier.Active then
+    QuerySupplier.Open;
+end;
+
+procedure TFrmEntryPembelian.EditQtyGudangChange(Sender: TObject);
+begin
+    HitungHargaBeliTotal;
+end;
+
+procedure TFrmEntryPembelian.editSatuanChange(Sender: TObject);
+begin
+    EditStockGudang.Value := SatBarangQuery.FieldByName('Qty_Satuan').AsInteger;
+    EditHargaBeli.Value := SatBarangQuery.FieldByName('Harga_Beli').AsInteger;
+end;
+
+procedure TFrmEntryPembelian.editSatuanCloseUp(Sender: TObject; LookupTable,
+  FillTable: TDataSet; modified: Boolean);
+begin
+   if modified then
+  begin
+    SatBarang := SatBarangQuery.FieldByName('Satuan').AsString;
+  end;
+end;
+
+procedure TFrmEntryPembelian.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  QueryDetPembelian.Close;
+  Action := caFree;
+end;
+
+procedure TFrmEntryPembelian.FormCreate(Sender: TObject);
+begin
+  QueryDetPembelian.UpdateOptions.UpdateTableName := 'DetPembelian';
+  QueryDetPembelian.UpdateOptions.KeyFields := 'No_Nota;No_Urut';
+end;
+
+procedure TFrmEntryPembelian.FormShow(Sender: TObject);
+var
+    LastNo, LastNumber : Integer;
+    No_Akhir : String;
+    PresetNoNota : String;
+begin
+    PresetNoNota := 'B';
+    With QueryNomerNota do
+    begin
+        Close;
+        SQL.Clear;
+        SQL.Add('Select Max (No_Nota) As LastNoNota');
+        SQL.Add('From Pembelian');
+        SQL.Add('Where SUBSTRING(No_Nota, 7, 4) = '+QuotedStr(FormatDateTime('mmyy', Now)));
+        SQL.Add('And SUBSTRING(No_Nota, 1, 1) = '+QuotedStr(PresetNoNota));
+        Open;
+        if Fieldbyname('LastNoNota').asString <> '' then
+        LastNo:=StrToInt(Copy(FieldByName('LastNoNota').AsString, 2, 4))+1
+        else LastNo := 1;
+        Close;
+        SQL.Clear;
+        SQL.Add('Select Max (No_Nota) As LastNoNota');
+        SQL.Add('From LunasPembelian');
+        SQL.Add('Where SUBSTRING(No_Nota, 7, 4) = '+QuotedStr(FormatDateTime('mmyy', Now)));
+        SQL.Add('And SUBSTRING(No_Nota, 1, 1) = '+QuotedStr(PresetNoNota));
+        Open;
+
+        if Fieldbyname('LastNoNota').asstring <> '' then
+          LastNumber:=StrToInt(Copy(Fieldbyname('LastNoNota').asstring, 2, 4))+1
+        else LastNumber:=1;
+
+        if lastNo < lastNumber then LastNo:=LastNumber;
+
+        if Length(intToStr(LastNo)) = 1 then
+          No_Akhir:=PresetNoNota+'000'+intToStr(LastNo)+'/'+FormatDateTime('mmyy', Now)
+        else if Length(intToStr(LastNo)) = 2 then
+          No_Akhir:=PresetNoNota+'00'+intToStr(LastNo)+'/'+FormatDateTime('mmyy', Now)
+        else if Length(intToStr(LastNo)) = 3 then
+          No_Akhir:=PresetNoNota+'0'+intToStr(LastNo)+'/'+FormatDateTime('mmyy', Now)
+        else if Length(intToStr(LastNo)) = 4 then
+          No_Akhir:=PresetNoNota+intToStr(LastNo)+'/'+FormatDateTime('mmyy', Now)
+        else
+        begin
+          messagedlg('Nomer Nota Sudah Penuh', mtInformation, [mbok], 0);
+          Abort;
+        end;
+        Close;
+    end;
+    maxID := 1;
+    editNoPembelian.Text:=No_Akhir;
+    QueryDetPembelian.Close;
+    QueryDetPembelian.SQL.Clear;
+    QueryDetPembelian.SQL.Add('Select *');
+    QueryDetPembelian.SQL.Add('From DetPembelian');
+    QueryDetPembelian.SQL.Add('Where No_Nota = '+QuotedStr(EditNoPembelian.Text));
+    QueryDetPembelian.Open;
+    EditNoNota.SetFocus;
+
+end;
+
+procedure TFrmEntryPembelian.TotalPembelianChange(Sender: TObject);
+var
+    ppn, discCash : double;
+begin
+    if editPpn.Text <> '' then ppn := strToFloat(editPpn.Text)
+    else ppn := 0;
+
+    if EditDiscGlobal.Text <> '' then discCash:= editDiscGlobal.Value
+    else discCash := 0;
+
+    if discCash < 1 then
+      totalDiscCash.Value := discCash * totalPembelian.Value
+    else totalDiscCash.Value := discCash;
+
+    editTotalPpn.Value := PPN/100 * (totalPembelian.Value - TotalDiscCash.Value);
+    grandTotal.Value := totalPembelian.Value - totalDiscCash.Value + editTotalPpn.Value + editAdjustment.Value;
+
+    HitungHargaBeliTotal;
+end;
+
+procedure TFrmEntryPembelian.LoadSatuanForBarang(const KodeBrg: string);
+begin
+  SatBarangQuery.Close;
+  SatBarangQuery.ParamByName('KodeBrg').DataType := ftString;
+  SatBarangQuery.ParamByName('KodeBrg').AsString := Trim(KodeBrg);
+  SatBarangQuery.Open;
+end;
+
+//validation sebelum confirm
+procedure TFrmEntryPembelian.Validation;
+begin
+  if EditNoNota.Text = '' then
+  begin
+    MessageDlg('Nomer nota tidak boleh kosong', mtinformation, [mbok], 0);
+    EditNoNota.SetFocus;
+  end
+  else if EditTgl.Text = '' then
+  begin
+    MessageDlg('Tanggal nota tidak boleh kosong', mtinformation, [mbok], 0);
+    EditTgl.SetFocus;
+  end
+  else if editKodeSupplier.Text = '' then
+  begin
+    MessageDlg('Kode supplier tidak boleh kosong', mtinformation, [mbok], 0);
+    editKodeSupplier.SetFocus;
+  end
+  else if editNamaSupplier.Text = '' then
+  begin
+    MessageDlg('Nama supplier tidak boleh kosong', mtinformation, [mbok], 0);
+    editNamaSupplier.SetFocus;
+  end
+end;
+
+//procedure TFrmEntryPembelian.IsiEditDetailPembelian(Q: TFDQuery; Mode: TIsiDetailModeType);
+//begin
+//    Q.FieldByName
+//end;
+
+procedure TFrmEntryPembelian.IsiDetailPembelian(Q: TFDQuery; Mode: TIsiDetailModeType);
+begin
+  if Mode = ganti then
+  begin
+    Q.Fieldbyname('Kode_Brg').asstring := EditKodeBarang.Text;
+    Q.Fieldbyname('Nama_Brg').asstring := EditNamaBarang.Text;
+    Q.Fieldbyname('Qty_Gudang').asFloat := EditQtyGudang.Value;
+    Q.Fieldbyname('Qty_Toko').asFloat := EditQtyToko.Value;
+    Q.Fieldbyname('Qty_Hadiah').asFloat := EditQtyHadiah.Value;
+    Q.Fieldbyname('Satuan').asString := EditSatuan.Text;
+    Q.Fieldbyname('Qty_Satuan').asFloat := EditQtyGudang.Value;
+    Q.Fieldbyname('Disc_Qty_Gudang').asFloat := 0;
+    Q.Fieldbyname('Disc_Qty_Toko').asFloat := 0;
+    Q.Fieldbyname('Disc_Qty_Hadiah').asFloat := 0;
+    Q.Fieldbyname('Satuan_Bonus').asString := EditSatuanBonus.Text;
+    Q.Fieldbyname('Qty_Satuan_Bonus').asFloat := editSatuanBonus.Value;
+    Q.Fieldbyname('Harga_Beli').asFloat := EditHargaBeli.Value;
+    Q.Fieldbyname('Disc1').asFloat := EditDisc1.Value;
+    Q.Fieldbyname('Disc2').asFloat := EditDisc2.Value;
+    Q.Fieldbyname('Disc3').asFloat := EditDisc3.Value;
+    Q.Fieldbyname('Disc4').asFloat := 0;
+    Q.Fieldbyname('Disc5').asFloat := 0;
+    Q.Fieldbyname('Harga_Jual').asFloat := 0;
+    Q.Fieldbyname('Kode_Paket').asString := '0';
+    Q.Fieldbyname('UserName').Asstring := 'Arisandi';
+  end
+  else if Mode = tambah then
+  begin
+    Q.Fieldbyname('Kode_Brg').asstring := EditKodeBarang.Text;
+    Q.Fieldbyname('Nama_Brg').asstring := EditNamaBarang.Text;
+    Q.Fieldbyname('Qty_Gudang').asFloat := QueryDetPembelian.FieldByName('Qty_Gudang').asFloat+EditQtyGudang.Value;
+    Q.Fieldbyname('Qty_Toko').asFloat := QueryDetPembelian.FieldByName('Qty_Toko').asFloat+EditQtyToko.Value;
+    Q.Fieldbyname('Qty_Hadiah').asFloat := QueryDetPembelian.FieldByName('Qty_Hadiah').asFloat+EditQtyHadiah.Value;
+    Q.Fieldbyname('Satuan').asString := EditSatuan.Text;
+    Q.Fieldbyname('Qty_Satuan').asFloat := EditQtyGudang.Value;
+    Q.Fieldbyname('Disc_Qty_Gudang').asFloat := 0;
+    Q.Fieldbyname('Disc_Qty_Toko').asFloat := 0;
+    Q.Fieldbyname('Disc_Qty_Hadiah').asFloat := 0;
+    Q.Fieldbyname('Satuan_Bonus').asString := EditSatuanBonus.Text;
+    Q.Fieldbyname('Qty_Satuan_Bonus').asFloat := editSatuanBonus.Value;
+    Q.Fieldbyname('Harga_Beli').asFloat := EditHargaBeli.Value;
+    Q.Fieldbyname('Disc1').asFloat := EditDisc1.Value;
+    Q.Fieldbyname('Disc2').asFloat := EditDisc2.Value;
+    Q.Fieldbyname('Disc3').asFloat := EditDisc3.Value;
+    Q.Fieldbyname('Disc4').asFloat := 0;
+    Q.Fieldbyname('Disc5').asFloat := 0;
+    Q.Fieldbyname('Harga_Jual').asFloat := 0;
+    Q.Fieldbyname('Kode_Paket').asString := '0';
+    Q.Fieldbyname('UserName').Asstring := 'Arisandi';
+  end
+  else if Mode = baru then
+  begin
+    if StateEdit then
+    begin
+      IDLama := Q.FieldByName('No_Urut').AsInteger;
+      Q.FieldByName('No_Urut').AsInteger := IDLama;
+    end
+    else
+    begin
+      Q.FieldByName('No_Urut').AsInteger := MaxID;
+      Inc(MaxID);
+    end;
+    Q.FieldByName('No_Nota').AsString := editNoPembelian.Text;
+    Q.FieldByName('Kode_Brg').AsString := editKodeBarang.Text;
+    Q.FieldByName('Nama_Brg').AsString := editNamaBarang.Text;
+    Q.FieldByName('Qty_Gudang').AsFloat := EditQtyGudang.Value;
+    Q.FieldByName('Qty_Toko').AsFloat := EditQtyToko.Value;
+    Q.FieldByName('Qty_Hadiah').AsFloat := EditQtyHadiah.Value;
+    Q.FieldByName('Qty').AsFloat := 0;
+    Q.FieldByName('Satuan').AsString := EditSatuan.Text;
+    Q.FieldByName('Qty_Satuan').AsFloat := EditQtyGudang.Value;
+    Q.FieldByName('Disc_Qty_Gudang').AsFloat := 0;
+    Q.FieldByName('Disc_Qty_Toko').AsFloat := 0;
+    Q.FieldByName('Disc_Qty_Hadiah').AsFloat := 0;
+    Q.FieldByName('Satuan_Bonus').AsString := EditSatuanBonus.Text;
+    Q.FieldByName('Qty_Satuan_Bonus').AsFloat := 0;
+    Q.FieldByName('Harga_Beli').AsFloat := EditHargaBeli.Value;
+    Q.FieldByName('Disc1').AsFloat := EditDisc1.Value;
+    Q.FieldByName('Disc2').AsFloat := EditDisc2.Value;
+    Q.FieldByName('Disc3').AsFloat := EditDisc3.Value;
+    Q.FieldByName('Disc4').AsFloat := 0;
+    Q.FieldByName('Disc5').AsFloat := 0;
+    Q.FieldByName('Total_Disc1').AsFloat := 0;
+    Q.FieldByName('Total_Disc2').AsFloat := 0;
+    Q.FieldByName('Total_Disc3').AsFloat := 0;
+    Q.FieldByName('Total_Disc4').AsFloat := 0;
+    Q.FieldByName('Total_Disc5').AsFloat := 0;
+    Q.FieldByName('Total_PPN').AsFloat := 0;
+    Q.FieldByName('Total_Disc_Cash').AsFloat := 0;
+    Q.FieldByName('Profit').AsFloat := 0;
+    Q.FieldByName('Qty_Bonus').AsFloat := 0;
+    Q.FieldByName('Harga_Jual').AsFloat := 0;
+    Q.FieldByName('Kode_Paket').AsString := '432';
+    Q.FieldByName('UserName').AsString := 'Arisandi';
+  end;
+end;
+
+procedure TFrmEntryPembelian.IsiPembelian(Q: TFDQuery);
+begin
+    Q.Append;
+    Q.FieldByName('No_Nota').AsString := editNoPembelian.Text;
+    Q.FieldByName('Tgl_Nota').AsDateTime := EditTgl.Date;
+    Q.FieldByName('No_Nota_Supplier').AsString := EditNoNota.Text;
+    Q.FieldByName('Kode_Sup').asString := editKodeSupplier.Text;
+    Q.FieldByName('Disc').AsFloat := EditDiscGlobal.Value;
+    Q.FieldByName('PPN').AsFloat := EditPPN.Value;
+    Q.FieldByName('Jangka_Waktu').AsFloat := EditTempo.Value;
+    Q.FieldByName('Total').AsFloat := GrandTotal.Value;
+    Q.FieldByName('Adjustment').AsFloat := EditAdjustment.Value;
+    Q.FieldByName('UserName').AsString := 'Arisandi';
+    Q.FieldByName('Penerima').AsString := 'temp';
+    Q.Post
+end;
+
+procedure TFrmEntryPembelian.QueryDetPembelianCalcFields(DataSet: TDataSet);
+var
+  Qty, Harga, Disc1, Disc2, Disc3: Double;
+begin
+  Qty   := DataSet.FieldByName('Qty_Gudang').AsFloat;
+  Harga := DataSet.FieldByName('Harga_Beli').AsFloat;
+  Disc1 := DataSet.FieldByName('Disc1').AsFloat;
+  Disc2 := DataSet.FieldByName('Disc2').AsFloat;
+  Disc3 := DataSet.FieldByName('Disc3').AsFloat;
+
+  DataSet.FieldByName('Total').AsFloat := (Qty * Harga) - Disc1 - Disc2 - Disc3;
+end;
+
+//hitung total pembelian
+procedure TFrmEntryPembelian.HitungTotalPembelian;
+begin
+  TotalPembelian.Value := TotalPembelian.Value - TotalLama + QueryDetPembelian.FieldByName('Total').AsFloat;
+  if QueryDetPembelian.FieldByName('Qty_Bonus').AsFloat <> 0 then
+    Inc(JumlahDetail, 2)
+  else
+    Inc(JumlahDetail);
+end;
+
+
+procedure TFrmEntryPembelian.ButtonOKClick;
+begin
+    //function validation
+    Validation;
+
+    if StateEdit then
+    begin
+      if QueryDetPembelian.Locate('No_Nota;No_Urut;Kode_Brg;Satuan', VarArrayOf([EditNoPembelian.Text, IDDetPembelian, EditKodeBarang.Text, editSatuan.Text]), []) then
+      begin
+         QueryDetPembelian.Edit;
+         IsiDetailPembelian(QueryDetPembelian, ganti);
+         QueryDetPembelian.Post;
+
+         HitungTotalPembelian;
+         BlankEntry;
+      end
+      else
+      begin
+         QueryDetPembelian.Delete;
+         QueryDetPembelian.Append;
+         IsiDetailPembelian(QueryDetPembelian, baru);
+         QueryDetPembelian.Post;
+
+         HitungTotalPembelian;
+         BlankEntry;
+      end;
+    end;
+
+
+    //query normal
+    if QueryDetPembelian.Locate('Kode_Brg;Satuan', VarArrayOf([editKodeBarang.Text, EditSatuan.Text]), []) then
+    begin
+        FrmTanya.LblAsk.Caption:='Barang sudah masuk dengan jumlah' +FloatToStr(QueryDetPembelian.FieldByName('Qty_Gudang').AsFloat)+' '+EditSatuan.Text;
+        FrmTanya.ShowModal;
+        if Answer = 'Ganti' then
+          begin
+            QueryDetPembelian.Edit;
+            IsiDetailPembelian(QueryDetPembelian, ganti);
+            QueryDetPembelian.Post;
+
+            HitungTotalPembelian;
+            BlankEntry;
+
+            EditKodeBarang.SetFocus;
+          end
+        else if Answer = 'Tambah' then
+          begin
+            QueryDetPembelian.Edit;
+            isiDetailPembelian(QueryDetPembelian,tambah);
+            QueryDetPembelian.Post;
+
+            HitungTotalPembelian;
+            BlankEntry;
+
+            EditKodeBarang.SetFocus;
+          end
+        else if Answer = 'Baru' then
+          begin
+            QueryDetPembelian.Append;
+            isiDetailPembelian(QueryDetPembelian, baru);
+            QueryDetPembelian.Post;
+
+            HitungTotalPembelian;
+            BlankEntry;
+
+            EditKodeBarang.SetFocus;
+          end
+        else
+          begin
+            EditKodeBarang.SetFocus;
+          end;
+    end
+    else
+      begin
+        QueryDetPembelian.Append;
+        IsiDetailPembelian(QueryDetPembelian, baru);
+        QueryDetPembelian.Post;
+
+        HitungTotalPembelian;
+        BlankEntry;
+      end;
+end;
+
+procedure TFrmEntryPembelian.ButtonSaveClick(Sender: TObject);
+begin
+  try
+    if not QueryPembelian.Active then QueryPembelian.Open;
+
+    DM.FDConnection.StartTransaction;
+
+    IsiPembelian(QueryPembelian);
+
+    QueryPembelian.ApplyUpdates(0);
+    QueryDetPembelian.ApplyUpdates(0);   // 0 = semua perubahan
+
+    DM.FDConnection.Commit;
+//    QueryDetPembelian.EmptyDataSet;
+    ShowMessage('Data berhasil disimpan!');
+  except
+    on E: Exception do
+    begin
+      DM.FDConnection.Rollback;
+      ShowMessage('Gagal simpan data: ' + E.Message);
+    end;
+  end;
+end;
+
+procedure TFrmEntryPembelian.DBGridDetPembelianDblClick(Sender: TObject);
+begin
+    editKodeBarang.Text := QueryDetPembelian.FieldByName('Kode_Brg').AsString;
+    editNamaBarang.Text := QueryDetPembelian.FieldByName('Nama_Brg').AsString;
+    editSatuan.Text := QueryDetPembelian.FieldByName('Satuan').AsString;
+    editQtyGudang.Value := QueryDetPembelian.FieldByName('Qty_Gudang').AsFloat;
+    editHargaBeli.Value := QueryDetPembelian.FieldByName('Harga_Beli').asFloat;
+    editDisc1.Value := QueryDetPembelian.FieldByName('Disc1').AsFloat;
+    editDisc2.Value := QueryDetPembelian.FieldByName('Disc2').AsFloat;
+    editDisc3.Value := QueryDetPembelian.FieldByName('Disc3').AsFloat;
+    StateEdit := true;
+    IDDetPembelian := QueryDetPembelian.FieldByName('No_Urut').asInteger;
+end;
+
+end.

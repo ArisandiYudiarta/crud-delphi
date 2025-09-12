@@ -41,10 +41,13 @@ type
     procedure btnEntryClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btnEditClick(Sender: TObject);
   private
     { Private declarations }
+    procedure HandleSupplierSelected(const Kode, Nama: String);
   public
     { Public declarations }
+    stateEditPembelian : Boolean;
   end;
 
 var
@@ -57,8 +60,13 @@ uses DataModule, Main, CariSupplier, EntryPembelian;
 
 procedure TFrmRegistrasiPembelian.btnCariClick(Sender: TObject);
 begin
-    CallerFindSupplier:='Registrasi Pembelian';
     FrmCariSupplier.ShowModal;
+    FrmCariSupplier.OnSupplierSelected := HandleSupplierSelected;
+end;
+
+procedure TFrmRegistrasiPembelian.HandleSupplierSelected(const Kode, Nama: String);
+begin
+  inputKodeSupplier.Text := Kode;
 end;
 
 procedure TFrmRegistrasiPembelian.btnCloseClick(Sender: TObject);
@@ -66,16 +74,25 @@ begin
   QueryTransaksiPembelian.Close;
 end;
 
+procedure TFrmRegistrasiPembelian.btnEditClick(Sender: TObject);
+begin
+  stateEditPembelian := true;
+  with TFrmEntryPembelian.Create(Application) do
+    try
+      showModal;
+    finally
+      Free;
+    end;
+end;
+
 procedure TFrmRegistrasiPembelian.btnEntryClick(Sender: TObject);
 begin
-    QueryTransaksiPembelian.Close;
-
     with TFrmEntryPembelian.Create(Application) do
       try
         ShowModal;
       finally
         Free;
-  end;
+      end;
 end;
 
 procedure TFrmRegistrasiPembelian.btnTampilClick(Sender: TObject);

@@ -2,8 +2,8 @@ object FrmCariSupplier: TFrmCariSupplier
   Left = 0
   Top = 0
   Caption = 'FrmCariSupplier'
-  ClientHeight = 425
-  ClientWidth = 895
+  ClientHeight = 418
+  ClientWidth = 1060
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,29 +18,43 @@ object FrmCariSupplier: TFrmCariSupplier
   object Label1: TLabel
     Left = 16
     Top = 16
-    Width = 189
-    Height = 13
+    Width = 281
+    Height = 19
     Caption = 'Potongan Kata dari Supplier yang Dicari'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
   end
   object TBNamaSupplier: TwwDBGrid
-    Left = 16
-    Top = 51
-    Width = 865
+    Left = 8
+    Top = 59
+    Width = 1041
     Height = 299
     Selected.Strings = (
       'Kode_Sup'#9'8'#9'Kode_Sup'
-      'Nama_Sup'#9'25'#9'Nama_Sup'
-      'Alamat'#9'25'#9'Alamat'
-      'Telp'#9'19'#9'Telp'
-      'Contact_Person'#9'16'#9'Contact_Person'
-      'Jangka_Waktu'#9'12'#9'Jangka_Waktu'
-      'Nama_Perusahaan'#9'28'#9'Nama_Perusahaan')
+      'Nama_Sup'#9'24'#9'Nama_Sup'
+      'Alamat'#9'16'#9'Alamat'
+      'Telp'#9'15'#9'Telp'
+      'Kota'#9'9'#9'Kota'
+      'Contact_Person'#9'15'#9'Contact_Person'
+      'Keterangan'#9'12'#9'Keterangan'
+      'Nama_Perusahaan'#9'20'#9'Nama_Perusahaan'
+      'Alamat_Perusahaan'#9'18'#9'Alamat_Perusahaan')
     IniAttributes.Delimiter = ';;'
     IniAttributes.UnicodeIniFile = False
     TitleColor = clBtnFace
     FixedCols = 0
     ShowHorzScrollBar = True
     DataSource = NamaSuppDataSource
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 0
     TitleAlignment = taLeftJustify
     TitleFont.Charset = DEFAULT_CHARSET
@@ -52,52 +66,77 @@ object FrmCariSupplier: TFrmCariSupplier
     TitleButtons = False
   end
   object btnAmbilNamaSupp: TBitBtn
-    Left = 695
+    Left = 861
     Top = 376
-    Width = 75
-    Height = 25
+    Width = 85
+    Height = 32
     Caption = 'Ambil'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 1
     OnClick = btnAmbilNamaSuppClick
   end
   object BitBtn2: TBitBtn
-    Left = 792
+    Left = 952
     Top = 376
-    Width = 75
-    Height = 25
+    Width = 85
+    Height = 32
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
     Kind = bkClose
     NumGlyphs = 2
+    ParentFont = False
     TabOrder = 2
   end
   object inputNamaSupplier: TEdit
-    Left = 211
-    Top = 13
+    Left = 303
+    Top = 9
     Width = 121
-    Height = 21
+    Height = 27
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 3
     OnChange = inputNamaSupplierChange
   end
   object btnSearchSupp: TBitBtn
-    Left = 338
-    Top = 11
-    Width = 75
-    Height = 25
+    Left = 430
+    Top = 8
+    Width = 85
+    Height = 32
     Caption = 'Search'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 4
     Visible = False
     OnClick = btnSearchSuppClick
   end
   object NamaSuppDataSource: TDataSource
     DataSet = NamaSuppQuery
-    Left = 472
+    Left = 904
     Top = 8
   end
   object NamaSuppQuery: TFDQuery
+    Active = True
     Connection = DM.FDConnection
     SQL.Strings = (
       'select *'
       'from Supplier')
-    Left = 568
+    Left = 1000
     Top = 8
   end
 end

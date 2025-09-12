@@ -23,7 +23,7 @@ begin
   Application.CreateForm(TFrmMasterSupplier, FrmMasterSupplier);
   Application.CreateForm(TFrmRegistrasiPembelian, FrmRegistrasiPembelian);
   Application.CreateForm(TFrmCariSupplier, FrmCariSupplier);
-  Application.CreateForm(TFrmEntryPembelian, FrmEntryPembelian);
+  //  Application.CreateForm(TFrmEntryPembelian, FrmEntryPembelian);
   Application.CreateForm(TFrmCariBarang, FrmCariBarang);
   Application.CreateForm(TFrmTanya, FrmTanya);
   Application.Run;

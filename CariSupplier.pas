@@ -11,7 +11,8 @@ uses
   Vcl.Grids, vcl.wwdbigrd, vcl.wwdbgrid;
 
 type
-  TFrmCariSupplier = class(TForm)
+    TSupplierSelectedEvent = procedure(const Kode, Nama: string) of object;
+    TFrmCariSupplier = class(TForm)
     TBNamaSupplier: TwwDBGrid;
     btnAmbilNamaSupp: TBitBtn;
     BitBtn2: TBitBtn;
@@ -29,6 +30,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    OnSupplierSelected: TSupplierSelectedEvent;
   end;
 
 var
@@ -78,7 +80,7 @@ begin
       Close;
 
       SQL.Clear;
-      SQL.Add('select Kode_Sup, Nama_Sup, Alamat, Kota, Telp, Contact_Person');
+      SQL.Add('select *');
       SQL.Add('from Supplier');
       SQL.Add('order by Nama_Sup');
       Open;
@@ -99,17 +101,12 @@ end;
 
 procedure TFrmCariSupplier.btnAmbilNamaSuppClick(Sender: TObject);
 begin
-    if CallerFindSupplier = 'Entry Pembelian' then
-    begin
-        FrmEntryPembelian.EditKodeSupplier.Text:=NamaSuppQuery.Fieldbyname('Kode_Sup').asstring;
-        FrmEntryPembelian.EditNamaSupplier.Text:=NamaSuppQuery.Fieldbyname('Nama_Sup').asstring;
-    end
-    else if CallerFindSupplier = 'Registrasi Pembelian' then
-        FrmRegistrasiPembelian.inputKodeSupplier.Text:=NamaSuppQuery.Fieldbyname('Kode_Sup').asstring
-
-    else
-    FrmRegistrasiPembelian.inputKodeSupplier.Text:=NamaSuppQuery.Fieldbyname('Kode_Sup').asstring;
-    Close;
+     if Assigned(OnSupplierSelected) then
+    OnSupplierSelected(
+      NamaSuppQuery.FieldByName('Kode_Sup').AsString,
+      NamaSuppQuery.FieldByName('Nama_Sup').AsString
+    );
+  Close;
 end;
 
 end.

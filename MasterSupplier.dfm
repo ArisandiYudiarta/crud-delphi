@@ -577,7 +577,7 @@ object FrmMasterSupplier: TFrmMasterSupplier
       '  Jenis_PKP, NPWP, NPPKP, Nama_Perusahaan, Alamat_Perusahaan'
       'FROM TRIAL.dbo.Supplier'
       'WHERE Kode_Sup = :Kode_Sup')
-    Left = 656
+    Left = 648
     Top = 200
   end
   object PopupMenu1: TPopupMenu

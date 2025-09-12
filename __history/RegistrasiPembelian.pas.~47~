@@ -1,0 +1,129 @@
+unit RegistrasiPembelian;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, LMDBaseControl,
+  LMDBaseGraphicControl, LMDBaseGraphicButton, LMDCustomShapeButton,
+  LMDShapeButton, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.Grids,
+  Vcl.DBGrids, vcl.wwdbigrd, vcl.wwdbgrid, vcl.Wwdbdatetimepicker;
+
+type
+  TFrmRegistrasiPembelian = class(TForm)
+    Panel1: TPanel;
+    btnEntry: TBitBtn;
+    btnEdit: TBitBtn;
+    btnDelete: TBitBtn;
+    btnClose: TBitBtn;
+    btnPreview: TLMDShapeButton;
+    btnPrint: TLMDShapeButton;
+    TransaksiDataSource: TDataSource;
+    QueryTransaksiPembelian: TFDQuery;
+    tabelTampilDataPembelian: TwwDBGrid;
+    inputTanggalAwal: TwwDBDateTimePicker;
+    No: TLabel;
+    InputNoPembelianAwal: TEdit;
+    InputNoPembelianAkhir: TEdit;
+    Label6: TLabel;
+    Label2: TLabel;
+    inputTanggalAkhir: TwwDBDateTimePicker;
+    Label3: TLabel;
+    Label4: TLabel;
+    btnCari: TBitBtn;
+    btnTampil: TBitBtn;
+    inputKodeSupplier: TEdit;
+    procedure btnTampilClick(Sender: TObject);
+    procedure btnCariClick(Sender: TObject);
+    procedure btnEntryClick(Sender: TObject);
+    procedure btnCloseClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+    procedure HandleSupplierSelected(const Kode, Nama: String);
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmRegistrasiPembelian: TFrmRegistrasiPembelian;
+
+implementation
+
+uses DataModule, Main, CariSupplier, EntryPembelian;
+{$R *.dfm}
+
+procedure TFrmRegistrasiPembelian.btnCariClick(Sender: TObject);
+begin
+//    CallerFindSupplier:='Registrasi Pembelian';
+    FrmCariSupplier.ShowModal;
+    FrmCariSupplier.OnSupplierSelected := HandleSupplierSelected;
+end;
+
+procedure TFrmRegistrasiPembelian.HandleSupplierSelected(const Kode, Nama: String);
+begin
+  inputKodeSupplier.Text := Kode;
+end;
+
+procedure TFrmRegistrasiPembelian.btnCloseClick(Sender: TObject);
+begin
+  QueryTransaksiPembelian.Close;
+end;
+
+procedure TFrmRegistrasiPembelian.btnEntryClick(Sender: TObject);
+begin
+    with TFrmEntryPembelian.Create(Application) do
+      try
+        ShowModal;
+      finally
+        Free;
+      end;
+end;
+
+procedure TFrmRegistrasiPembelian.btnTampilClick(Sender: TObject);
+begin
+    With QueryTransaksiPembelian do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Add('SELECT A.*, B.Nama_Sup');
+      SQL.Add('FROM Pembelian A, Supplier B');
+      SQL.Add('WHERE A.Kode_Sup = B.Kode_Sup');
+
+      if (InputNoPembelianAwal.Text <> '') and (inputNoPembelianAkhir.Text <> '') then
+      begin
+          SQL.Add('AND A.No_Nota >= '+QuotedStr(inputNoPembelianAwal.Text));
+          SQL.Add('AND A.No_Nota <= '+QuotedStr(inputNoPembelianAkhir.Text));
+      end;
+
+      if inputKodeSupplier.Text <> '' then
+      SQL.Add('AND A.Kode_Sup = ' +QuotedStr(inputKodeSupplier.Text));
+
+      if (inputTanggalAwal.Text <> '') and (inputTanggalAkhir.Text <> '') then
+          begin
+               SQL.Add('And A.Tgl_Nota >= '+QuotedStr(FormatDateTime('mm/dd/yyyy', inputTanggalAwal.Date)));
+               SQL.Add('And A.Tgl_Nota <= '+QuotedStr(FormatDateTime('mm/dd/yyyy', inputTanggalAkhir.Date)));
+          end;
+
+
+      Open;
+    end;
+end;
+
+procedure TFrmRegistrasiPembelian.FormShow(Sender: TObject);
+begin
+    With QueryTransaksiPembelian do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Add('SELECT A.*, B.Nama_Sup');
+        SQL.Add('FROM Pembelian A inner join Supplier B');
+        SQL.Add('on A.Kode_Sup = B.Kode_Sup');
+        Open;
+      end;
+end;
+
+end.

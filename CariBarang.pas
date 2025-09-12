@@ -11,6 +11,7 @@ uses
   Vcl.Grids, vcl.wwdbigrd, vcl.wwdbgrid;
 
 type
+  TBarangSelectedEvent = procedure(const Kode, Nama: String) of object;
   TFrmCariBarang = class(TForm)
     LabelCariBarang: TLabel;
     inputNamaBarang: TEdit;
@@ -33,6 +34,9 @@ type
     { Private declarations }
   public
     { Public declarations }
+    OnBarangSelected: TBarangSelectedEvent;
+    SelectedKode: string;
+    SelectedNama: string;
   end;
 
 var
@@ -48,11 +52,14 @@ implementation
 
 
 procedure TFrmCariBarang.btnAmbilNamaBarangClick(Sender: TObject);
+var
+  kode, nama: string;
 begin
-    QueryProduk.FetchAll;
-    FrmEntryPembelian.editKodeBarang.Text:=QueryProduk.FieldByName('Kode_Brg').asString;
-    FrmEntryPembelian.editNamaBarang.Text:=QueryProduk.FieldByName('Nama_Brg').asString;
-    FrmEntryPembelian.LoadSatuanForBarang(QueryProduk.FieldByName('Kode_Brg').AsString);
+  SelectedKode := QueryProduk.FieldByName('Kode_Brg').AsString;
+  SelectedNama := QueryProduk.FieldByName('Nama_Brg').AsString;
+
+
+  ModalResult := mrOk;
 end;
 
 procedure TFrmCariBarang.btnSearchProdukClick(Sender: TObject);
