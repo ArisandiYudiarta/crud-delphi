@@ -39,9 +39,9 @@ type
     procedure btnTampilClick(Sender: TObject);
     procedure btnCariClick(Sender: TObject);
     procedure btnEntryClick(Sender: TObject);
-    procedure btnCloseClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnEditClick(Sender: TObject);
+    procedure btnDeleteClick(Sender: TObject);
   private
     { Private declarations }
     procedure HandleSupplierSelected(const Kode, Nama: String);
@@ -69,9 +69,14 @@ begin
   inputKodeSupplier.Text := Kode;
 end;
 
-procedure TFrmRegistrasiPembelian.btnCloseClick(Sender: TObject);
+procedure TFrmRegistrasiPembelian.btnEntryClick(Sender: TObject);
 begin
-  QueryTransaksiPembelian.Close;
+    with TFrmEntryPembelian.Create(Application) do
+      try
+        ShowModal;
+      finally
+        Free;
+      end;
 end;
 
 procedure TFrmRegistrasiPembelian.btnEditClick(Sender: TObject);
@@ -85,14 +90,33 @@ begin
     end;
 end;
 
-procedure TFrmRegistrasiPembelian.btnEntryClick(Sender: TObject);
+procedure TFrmRegistrasiPembelian.btnDeleteClick(Sender: TObject);
+const
+   Tables : array[0..1] of string = ('Pembelian','DetPembelian');
+var
+  i : Integer;
 begin
-    with TFrmEntryPembelian.Create(Application) do
-      try
-        ShowModal;
-      finally
-        Free;
+  if Messagedlg('Hapus nota pembelian ini?', mtconfirmation, [mbyes, mbno], 0) = mryes then
+  begin
+    DM.FDConnection.StartTransaction;
+
+    try
+
+      for i := Low(Tables) to High(Tables) do
+      begin
+        // hapus pembelian
+        DM.Query.SQl.Text := 'delete from ' + Tables[i] + ' where No_Nota = :No_Nota';
+        DM.Query.ParamByName('No_Nota').AsString := QueryTransaksiPembelian.FieldByName('No_Nota').AsString;
+        DM.Query.ExecSQL;
       end;
+      DM.FDConnection.Commit;
+      QueryTransaksiPembelian.Close;
+      QueryTransaksiPembelian.Open;
+    except
+      DM.FDConnection.Rollback;
+      raise;
+    end;
+  end;
 end;
 
 procedure TFrmRegistrasiPembelian.btnTampilClick(Sender: TObject);

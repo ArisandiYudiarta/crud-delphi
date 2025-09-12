@@ -199,7 +199,7 @@ var
 
 implementation
 
-uses DataModule, CariBarang, CariSupplier, Tanya, EntryPembelian;
+uses DataModule, CariBarang, CariSupplier, Tanya;
 
 {$R *.dfm}
 

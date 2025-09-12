@@ -41,10 +41,14 @@ type
     procedure btnEntryClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btnEditClick(Sender: TObject);
+    procedure btnDeleteClick(Sender: TObject);
   private
+    { Private declarations }
     procedure HandleSupplierSelected(const Kode, Nama: String);
   public
     { Public declarations }
+    stateEditPembelian : Boolean;
   end;
 
 var
@@ -57,12 +61,11 @@ uses DataModule, Main, CariSupplier, EntryPembelian;
 
 procedure TFrmRegistrasiPembelian.btnCariClick(Sender: TObject);
 begin
-//    CallerFindSupplier:='Registrasi Pembelian';
-    FrmCariSupplier.OnSupplierSelected := HandleSupplierSelected;
     FrmCariSupplier.ShowModal;
+    FrmCariSupplier.OnSupplierSelected := HandleSupplierSelected;
 end;
 
-procedure TFrmEntryPembelian.HandleSupplierSelected(const Kode);
+procedure TFrmRegistrasiPembelian.HandleSupplierSelected(const Kode, Nama: String);
 begin
   inputKodeSupplier.Text := Kode;
 end;
@@ -80,6 +83,44 @@ begin
       finally
         Free;
       end;
+end;
+
+procedure TFrmRegistrasiPembelian.btnEditClick(Sender: TObject);
+begin
+  stateEditPembelian := true;
+  with TFrmEntryPembelian.Create(Application) do
+    try
+      showModal;
+    finally
+      Free;
+    end;
+end;
+
+procedure TFrmRegistrasiPembelian.btnDeleteClick(Sender: TObject);
+const
+   Tables : array[0..1] of string = ('Pembelian','DetPembelian');
+var
+  i : Integer;
+begin
+  if Messagedlg('Hapus nota pembelian ini?', mtconfirmation, [mbyes, mbno], 0) = mryes then
+  begin
+    DM.FDConnection.StartTransaction;
+
+    try
+
+      for i := Low(Tables) to High(Tables) do
+      begin
+        // hapus pembelian
+        DM.Query.SQl.Text := 'delete from ' + Tables[i] + ' where No_Nota = :No_Nota';
+        DM.Query.ParamByName('No_Nota').AsString := QueryTransaksiPembelian.FieldByName('No_Nota').AsString;
+        DM.Query.ExecSQL;
+      end;
+      DM.FDConnection.Commit
+    except
+      DM.FDConnection.Rollback;
+      raise;
+    end;
+  end;
 end;
 
 procedure TFrmRegistrasiPembelian.btnTampilClick(Sender: TObject);

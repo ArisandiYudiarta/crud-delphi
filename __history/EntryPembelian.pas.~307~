@@ -351,8 +351,13 @@ end;
 procedure TFrmEntryPembelian.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-  QueryDetPembelian.Close;
-  Action := caFree;
+//  QueryDetPembelian.Close;
+//  QueryPembelian.Close;
+//  BarangQuery.Close;
+//  QuerySupplier.Close;
+//  QueryNomerNota.Close;
+//  SatBarangQuery.Close;
+//  Action := caFree;
 end;
 
 procedure TFrmEntryPembelian.FormCreate(Sender: TObject);
@@ -533,7 +538,6 @@ begin
   begin
     if StateEdit then
     begin
-
       Q.FieldByName('No_Urut').AsInteger := IDLama;
     end
     else
@@ -626,71 +630,17 @@ begin
     begin
       if QueryDetPembelian.Locate('No_Nota;No_Urut;Kode_Brg;Satuan', VarArrayOf([EditNoPembelian.Text, IDDetPembelian, EditKodeBarang.Text, editSatuan.Text]), []) then
       begin
-         QueryDetPembelian.Edit;
-         IsiDetailPembelian(QueryDetPembelian, ganti);
-         QueryDetPembelian.Post;
+        QueryDetPembelian.Edit;
+        IsiDetailPembelian(QueryDetPembelian, ganti);
+        QueryDetPembelian.Post;
 
-         HitungTotalPembelian;
-         BlankEntry;
+        HitungTotalPembelian;
+        BlankEntry;
       end
       else
       begin
-         QueryDetPembelian.Delete;
-         QueryDetPembelian.Append;
-         IsiDetailPembelian(QueryDetPembelian, baru);
-         QueryDetPembelian.Post;
-
-         HitungTotalPembelian;
-         BlankEntry;
-      end;
-    end;
-
-
-    //query normal
-    if QueryDetPembelian.Locate('Kode_Brg;Satuan', VarArrayOf([editKodeBarang.Text, EditSatuan.Text]), []) then
-    begin
-        FrmTanya.LblAsk.Caption:='Barang sudah masuk dengan jumlah' +FloatToStr(QueryDetPembelian.FieldByName('Qty_Gudang').AsFloat)+' '+EditSatuan.Text;
-        FrmTanya.ShowModal;
-        if Answer = 'Ganti' then
-          begin
-            QueryDetPembelian.Edit;
-            IsiDetailPembelian(QueryDetPembelian, ganti);
-            QueryDetPembelian.Post;
-
-            HitungTotalPembelian;
-            BlankEntry;
-
-            EditKodeBarang.SetFocus;
-          end
-        else if Answer = 'Tambah' then
-          begin
-            QueryDetPembelian.Edit;
-            isiDetailPembelian(QueryDetPembelian,tambah);
-            QueryDetPembelian.Post;
-
-            HitungTotalPembelian;
-            BlankEntry;
-
-            EditKodeBarang.SetFocus;
-          end
-        else if Answer = 'Baru' then
-          begin
-            QueryDetPembelian.Append;
-            isiDetailPembelian(QueryDetPembelian, baru);
-            QueryDetPembelian.Post;
-
-            HitungTotalPembelian;
-            BlankEntry;
-
-            EditKodeBarang.SetFocus;
-          end
-        else
-          begin
-            EditKodeBarang.SetFocus;
-          end;
-    end
-    else
-      begin
+        IDLama := QueryDetPembelian.FieldByName('No_Urut').AsInteger;
+        QueryDetPembelian.Delete;
         QueryDetPembelian.Append;
         IsiDetailPembelian(QueryDetPembelian, baru);
         QueryDetPembelian.Post;
@@ -698,6 +648,63 @@ begin
         HitungTotalPembelian;
         BlankEntry;
       end;
+    end
+    else
+    begin
+      //query normal
+      if QueryDetPembelian.Locate('Kode_Brg;Satuan', VarArrayOf([editKodeBarang.Text, EditSatuan.Text]), []) then
+      begin
+          FrmTanya.LblAsk.Caption:='Barang sudah masuk dengan jumlah' +FloatToStr(QueryDetPembelian.FieldByName('Qty_Gudang').AsFloat)+' '+EditSatuan.Text;
+          FrmTanya.ShowModal;
+          if Answer = 'Ganti' then
+            begin
+              QueryDetPembelian.Edit;
+              IsiDetailPembelian(QueryDetPembelian, ganti);
+              QueryDetPembelian.Post;
+
+              HitungTotalPembelian;
+              BlankEntry;
+
+              EditKodeBarang.SetFocus;
+            end
+          else if Answer = 'Tambah' then
+            begin
+              QueryDetPembelian.Edit;
+              isiDetailPembelian(QueryDetPembelian,tambah);
+              QueryDetPembelian.Post;
+
+              HitungTotalPembelian;
+              BlankEntry;
+
+              EditKodeBarang.SetFocus;
+            end
+          else if Answer = 'Baru' then
+            begin
+              QueryDetPembelian.Append;
+              isiDetailPembelian(QueryDetPembelian, baru);
+              QueryDetPembelian.Post;
+
+              HitungTotalPembelian;
+              BlankEntry;
+
+              EditKodeBarang.SetFocus;
+            end
+          else
+            begin
+              EditKodeBarang.SetFocus;
+            end;
+      end
+      else
+        begin
+          QueryDetPembelian.Append;
+          IsiDetailPembelian(QueryDetPembelian, baru);
+          QueryDetPembelian.Post;
+
+          HitungTotalPembelian;
+          BlankEntry;
+        end;
+    end;
+
 end;
 
 procedure TFrmEntryPembelian.ButtonSaveClick(Sender: TObject);
